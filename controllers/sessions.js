@@ -6,8 +6,7 @@ const securityUtils = require('../utils/securityUtils.js');
 const validationUtils = require('../public/js/validation.js');
 
 // DB connectivity
-// TODO: Make sure this is hooked up to the correct model
-const User = null; // require('../models/users.js');
+const User = require('../models/users.js');
 
 // Destroy a session
 router.delete('/', (req, res)=>{
@@ -18,7 +17,7 @@ router.delete('/', (req, res)=>{
     // Respond to the caller with a success status
     res.status(200).json({
       status:200,
-      message:'logout complete'
+      message:'log out complete'
     });
   })
 });
@@ -27,15 +26,14 @@ router.delete('/', (req, res)=>{
 router.post('/', (req, res)=>{
   let badCreds = 'Invalid username/password combination';
   // Clean the input
-  // TODO: Make sure this is the correct data
-  let username = validationUtils.cleanString(req.body.username);
+  let internalName = validationUtils.cleanString(req.body.username).toLowerCase();
   let password = validationUtils.cleanString(req.body.password);
-  if (username.length==0 || password.length==0) {
+  if (internalName.length==0 || password.length==0) {
     // Shortcut if either value is missing
     securityUtils.authFailedJson(res, badCreds);
   } else {
     // Try to authenticate the user
-    User.findOne({username: username}, (err, foundUser)=>{ // TODO: Make sure this is the correct attribute
+    User.findOne({internalName: internalName}, (err, foundUser)=>{
       if (err) {
         // Error came back from the database
         console.log("Error trying to authenticate user:", err);
@@ -48,9 +46,9 @@ router.post('/', (req, res)=>{
         if(securityUtils.matchesHash(password, foundUser.password)){
           // Password matched so store the user to the session and return success
           req.session.loggedInUser = foundUser;
-          res.status(201).json({
-            status:201,
-            message:'session created'
+          res.status(200).json({
+            status:200,
+            message:'log in successful'
           });
         } else {
           // Passwords don't match
