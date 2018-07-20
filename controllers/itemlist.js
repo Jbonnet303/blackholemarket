@@ -34,7 +34,7 @@ router.delete('/:id', (req, res)=>{
     });
 });
 //Creates new item
-router.post('/', (req, res)=>{
+router.post('/new', (req, res)=>{
     Itemlist.create(req.body, (err, createdItem)=>{
       if(err){
         //Failure to create item
