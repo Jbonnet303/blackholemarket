@@ -124,9 +124,38 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       $scope.$apply();
     }
   }
-
+  //Call to backend to create a new item
+  ctrl.createItem = function(){
+          $http({
+              method:'POST',
+              url: '/items',
+              data: {
+                name: ctrl.name,
+                img: ctrl.img,
+                qty: ctrl.qty,
+                price: ctrl.price
+              }
+          }).then(function(response){
+              console.log(response);
+          }, function(){
+              console.log('error');
+          });
+      }
+  //Call to backend to list all items
+  ctrl.getItems = function(){
+      $http({
+          method:'GET',
+          url: '/items',
+      }).then(function(response){
+          ctrl.items = response.data;
+      }, function(){
+          console.log('error');
+      });
+  };
   // Initialize the login form variables
   ctrl.resetCredForm();
+  //Calls all the items to show on the page
+  ctrl.getTodos();
   // Call to get the user info on load to restore a session on a page refresh
   $userInfo.get().then((info)=>{
     // Update the current user object
