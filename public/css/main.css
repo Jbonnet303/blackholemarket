@@ -21,15 +21,15 @@ h1 {
   text-shadow: 35px 35px 20px #000000;
 }
 
-/* Style Added To Login Button */
-.login-button {
+/* Style Added To Login/logout Buttons */
+#login-button, #logout-button {
   height: 39px;
   background-color: #0ef216;
   color: black;
 }
 
-/* Style Added To Header Tag */
-.header-container {
+/* Style Added To login form */
+.cred-form {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -37,6 +37,17 @@ h1 {
   opacity: .7;
   text-align: center;
   padding: 30px;
+}
+
+/* Style for the login error messages */
+.cred-error {
+  color: #0ef216;
+  text-align: center;
+  display: block;
+  width: 100%;
+  padding: 15px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 /* Glow Laser Beam Added Surrounding Header */

@@ -1,0 +1,9 @@
+<form ng-hide="ctrl.curUser" class="cred-form" ng-submit="ctrl.submitCredForm()">
+  <input type="text" placeholder="Username" ng-model="ctrl.creds.username" required>
+  <input type="password" placeholder="Password" ng-model="ctrl.creds.password" required>
+  <input id="login-button" type="submit" value="{{ ctrl.credBtnText }}">
+  <div class="cred-error" ng-click="ctrl.toggleCredFormType()">{{ ctrl.credErrorMessage }}</div>
+</form>
+<form ng-show="ctrl.curUser" class="cred-form" ng-submit="ctrl.doLogOut()">
+  <input id="logout-button" type="submit" value="log out">
+</form>
