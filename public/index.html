@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" ng-app="BHMApp">
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Quantico" rel="stylesheet">
     <meta charset="utf-8">
     <title>Blackhole Market</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
@@ -10,9 +11,22 @@
     <link rel="stylesheet" href="/css/skeleton.css">
     <link rel="stylesheet" href="/css/main.css">
   </head>
+
   <body ng-controller="MainController as ctrl">
 
-    <h1>{{ ctrl.title }}</h1>
+    <div class="text glow">
+      <header>
+        <div class="header-container">
+          <input type="text" placeholder="Enter Username" name="username" required>
+          <input type="password" placeholder="Enter Password" name="password" required>
+            <div class="login-button">
+              <button type="submit">Login</button>
+            </div>
+        </div>
+      </header>
+    </div>
+
+      <h1>{{ ctrl.title }}</h1>
 
   </body>
 </html>

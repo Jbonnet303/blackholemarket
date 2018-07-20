@@ -8,5 +8,5 @@ app.controller("MainController", function() {
   const ctrl = this;
   // All references from now on will user ctrl.<ref> instead of
   // this.<ref>
-  ctrl.title = "Welcome to the Blackhole Market!";
+  ctrl.title = "Blackhole Market";
 })

@@ -1,1 +1,87 @@
+/* Main Background Image Set */
+html {
+  position: absolute;
+  background: url(https://www.nasa.gov/sites/default/files/cygx1_ill.jpg) center center;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 
+/* Style Added To H1 Tag */
+h1 {
+  font-family: 'Quantico', sans-serif;
+  text-align: center;
+  font-size: 60px;
+  padding-top: 60px;
+  color: #0ef216;
+  text-shadow: 35px 35px 20px #000000;
+}
+
+/* Style Added To Login Button */
+.login-button {
+  height: 39px;
+  background-color: #0ef216;
+  color: black;
+}
+
+/* Style Added To Header Tag */
+.header-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  opacity: .7;
+  text-align: center;
+  padding: 30px;
+}
+
+/* Glow Laser Beam Added Surrounding Header */
+.glow {
+  animation-name: glow;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+}
+
+/* Key Frames Added For Glow Laser Beam */
+@keyframes glow {
+    0% {
+		border-color: #54e014;
+		box-shadow: 0 0 50px rgba(0,255,0,.6), inset 0 0 50px rgba(0,255,0,.6), 0 5px 0 #24590d;
+    }
+    25% {
+    border-color: #1a4706;
+    box-shadow: 0 0 50px rgba(26,71,6,.6), inset 0 0 50px rgba(26,71,6,.6), 0 5px 0 #1a4706;
+    }
+    50% {
+    border-color: #348e0b;
+    box-shadow: 0 0 50px rgba(52,142,11,.6), inset 0 0 50px rgba(52,142,11,.6), 0 5px 0 #348e0b;
+    }
+    75% {
+    border-color: #3ca30e;
+    box-shadow: 0 0 50px rgba(61,178,8,.6), inset 0 0 50px rgba(61,178,8,.6), 0 5px 0 #3ca30e;
+    }
+    100% {
+		border-color: #54e014;
+		box-shadow: 0 0 50px rgba(0,255,0,.6), inset 1 1 50px rgba(0,255,0,.6), 0 5px 0 #5bfc16;
+    }
+    75% {
+    border-color: #3ca30e;
+    box-shadow: 0 0 50px rgba(61,178,8,.6), inset 0 0 50px rgba(61,178,8,.6), 0 5px 0 #3ca30e;
+    }
+    50% {
+    border-color: #348e0b;
+    box-shadow: 0 0 50px rgba(52,142,11,.6), inset 0 0 50px rgba(52,142,11,.6), 0 5px 0 #348e0b;
+    }
+    25% {
+    border-color: #1a4706;
+    box-shadow: 0 0 50px rgba(26,71,6,.6), inset 0 0 50px rgba(26,71,6,.6), 0 5px 0 #1a4706;
+    }
+    0% {
+    border-color: #54e014;
+    box-shadow: 0 0 50px rgba(0,255,0,.6), inset 0 0 50px rgba(0,255,0,.6), 0 5px 0 #5bfc16;
+    }
+}
