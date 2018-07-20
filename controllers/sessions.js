@@ -8,6 +8,15 @@ const validationUtils = require('../public/js/validation.js');
 // DB connectivity
 const User = require('../models/users.js');
 
+// Get the logged in user info
+router.get('/', (req, res)=>{
+  if(req.session.loggedInUser){
+    res.json(req.session.loggedInUser);
+  } else {
+    securityUtils.authFailedJson(res);
+  }
+});
+
 // Destroy a session
 router.delete('/', (req, res)=>{
   // Make sure the user is logged out (in case something fails with the destroy)

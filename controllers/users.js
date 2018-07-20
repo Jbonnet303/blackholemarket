@@ -67,6 +67,8 @@ router.post('/', function(req, res){
             message:'Internal error while attempting to create user'
           });
         } else {
+          // Log in on successful create
+          req.session.loggedInUser = createdUser;
           res.status(201).json({
             status:201,
             message: "user created"
