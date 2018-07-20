@@ -155,7 +155,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   // Initialize the login form variables
   ctrl.resetCredForm();
   //Calls all the items to show on the page
-  ctrl.getTodos();
+  ctrl.getItems();
   // Call to get the user info on load to restore a session on a page refresh
   $userInfo.get().then((info)=>{
     // Update the current user object
