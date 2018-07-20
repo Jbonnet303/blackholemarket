@@ -21,6 +21,16 @@ h1 {
   text-shadow: 35px 35px 20px #000000;
 }
 
+/* Username Textarea Background Style */
+input[type="text"], textarea {
+  background-color : #b7e7ff;
+}
+
+/* Password Textarea Background Style */
+input[type="password"], textarea {
+  background-color : #b7e7ff;
+}
+
 /* Style Added To Login Button */
 .login-button {
   height: 39px;
@@ -34,7 +44,7 @@ h1 {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  opacity: .7;
+  opacity: .5;
   text-align: center;
   padding: 30px;
 }
