@@ -7,16 +7,16 @@ app.service('$userInfo', UserInfo);
 // The main controller
 app.controller("MainController", ['$scope', '$http', '$userInfo', function($scope, $http, $userInfo) {
   // A trick to make referencing controller variables the same
-  // from the index.html and inside the folder
+  // from the index.html and inside the controller
   const ctrl = this;
-  // All references from now on will user ctrl.<ref> instead of
-  // this.<ref>
+  // All references from now on will use ctrl.<ref> instead of this.<ref>
   ctrl.title = "Blackhole Market";
   ctrl.curUser = null;
 
-  // Simple helper function to set the user info (mostly for and easy breakpoint)
+  // Simple helper function to set the user info (shares it with the chat controller)
   ctrl.setCurUser = (info) => {
     ctrl.curUser = info;
+    $userInfo.set(info);
   }
 
   // Changes the functionality of the cred form
@@ -70,7 +70,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       // Call the session log in route in the backend
       await $http({method: 'POST', url: '/sessions', data: ctrl.creds});
       // Get the updated user info
-      let info = await $userInfo.get();
+      let info = await $userInfo.refresh();
       // Update the current user object
       ctrl.setCurUser(info);
       // Clear the form
@@ -107,7 +107,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       // Call the user create route in the backend
       await $http({method: 'POST', url: '/users', data: ctrl.creds});
       // Get the updated user info
-      let info = await $userInfo.get();
+      let info = await $userInfo.refresh();
       // Update the current user object
       ctrl.setCurUser(info);
       // Clear the form
@@ -128,10 +128,72 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   // Initialize the login form variables
   ctrl.resetCredForm();
   // Call to get the user info on load to restore a session on a page refresh
-  $userInfo.get().then((info)=>{
+  $userInfo.refresh().then((info)=>{
     // Update the current user object
     ctrl.setCurUser(info);
     // Make sure the page refelcts the model changes
     $scope.$apply();
+  });
+}])
+
+// A controller for the chat functionality
+app.controller("ChatController", ['$scope', '$userInfo', function($scope, $userInfo) {
+  // A trick to make referencing controller variables the same
+  // from the index.html and inside the controller
+  const chat = this;
+  // A reference to the chat window DOM object
+  const chatWindow = document.getElementById('chat-messages');
+  // All references from now on will use chat.<ref> instead of this.<ref>
+  chat.message = '';
+  chat.receivedMessages = [];
+
+  // A special variable for the socket.io interaction
+  chat.socket = io();
+
+  // A function that get's the currently logged in user's name
+  const getUsername = () => {
+    return $userInfo.get().username;
+  }
+
+  // A function to scroll to the bottom of the chat messages
+  const scrollToNewMessage = () => {
+    // Use vanilla javascript to scroll the window
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
+
+  // Figure out what class should be assigned to the username span
+  chat.getUserClass = (username) => {
+    return (getUsername()==username ? 'self' : 'stranger');
+  }
+
+  // Send a chat message to whomever is connected
+  chat.sendMessage = () => {
+    let userMessage = cleanString(chat.message);
+    // Don't send a message that is only whitespace
+    if (userMessage.length > 0) {
+      // Build up the message
+      let message = {
+        user:getUsername(),
+        message: userMessage
+      };
+      // Clear the message input
+      chat.message = '';
+      // Add it to the user's own chat window
+      chat.receivedMessages.push(message);
+      // A hack to scroll after the model has refreshed
+      setTimeout(scrollToNewMessage, 100);
+      // Send it to the other users
+      chat.socket.emit('new_message', message);
+    }
+  }
+
+  // Listen for incoming chat messages
+  chat.socket.on('new_message', (message) => {
+    // Add the message to the known messages
+    chat.receivedMessages.push(message);
+    // Make sure the page refelcts the model changes
+    $scope.$apply();
+    // Scroll after the model has been updated
+    scrollToNewMessage();
   });
 }])

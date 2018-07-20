@@ -4,6 +4,7 @@
     <link href="https://fonts.googleapis.com/css?family=Quantico" rel="stylesheet">
     <meta charset="utf-8">
     <title>Blackhole Market</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
 		<script src="/js/validation.js" charset="utf-8"></script>
 		<script src="/js/services.js" charset="utf-8"></script>
@@ -22,6 +23,6 @@
     </div>
 
       <h1>{{ ctrl.title }}</h1>
-
+      <div class="chat-dialog" ng-include="'partials/chat.html'"></div>
   </body>
 </html>

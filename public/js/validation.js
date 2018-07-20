@@ -90,16 +90,6 @@ const validateUsername = (str) => {
   return null;
 }
 
-// Test to make sure a string is not all whitespace
-// Returns error message on error or null if string has content
-const validateNotEmpty = (str) => {
-  let trimmed = cleanString(str);
-  if (trimmed.length == 0) {
-    return "Input can not be empty";
-  }
-  return null;
-}
-
 // Export the functions for use as a module
 if (typeof module !== 'undefined') {
   // Constants
@@ -114,5 +104,4 @@ if (typeof module !== 'undefined') {
   // Validation functions
   module.exports.validatePassword = validatePassword;
   module.exports.validateUsername = validateUsername;
-  module.exports.validateNotEmpty = validateNotEmpty;
 }

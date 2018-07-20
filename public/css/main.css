@@ -11,6 +11,11 @@ html {
   background-size: cover;
 }
 
+/* Default to things being centered */
+body {
+  text-align: center;
+}
+
 /* Style Added To H1 Tag */
 h1 {
   font-family: 'Quantico', sans-serif;
@@ -58,6 +63,58 @@ input[type="password"], textarea {
   padding: 15px;
   font-size: 20px;
   font-weight: bold;
+}
+
+/* The user chat dialog */
+.chat-dialog {
+  width: 70%;
+  min-width: 300px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* The message area of the chat dialog */
+#chat-messages {
+  height: 7em;
+  margin: 0;
+  flex-grow: 1;
+  text-align: left;
+  border: 1px inset silver;
+  background-color: black;
+  overflow-y: auto;
+  color: #0ef216;
+}
+
+/* Individual displayed messages */
+.message {
+  margin: 3px 5px;
+}
+
+/* The input area of the chat dialog */
+.chat-input {
+  opacity: .5;
+  display: flex;
+}
+
+/* The chat input box */
+.chat-input > input[type="text"] {
+  flex-grow: 1;
+}
+
+/* The chat send button */
+.chat-input > input[type="submit"] {
+  color: black;
+  background-color: #0ef216;
+}
+
+/* Message user name styles */
+.self {
+  color: yellow;
+  font-style: italic;
+}
+.stranger {
+  color: orange;
 }
 
 /* Glow Laser Beam Added Surrounding Header */
