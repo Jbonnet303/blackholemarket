@@ -1,0 +1,12 @@
+<div ng-if="ctrl.curUser" ng-controller="ChatController as chat">
+  <div id="chat-messages">
+    <div class="message" ng-repeat="msg in chat.receivedMessages">
+      <span class="{{ chat.getUserClass(msg.user) }}">{{ msg.user + ':' }}</span>
+      {{ msg.message }}
+    </div>
+  </div>
+  <form class="chat-input" ng-submit="chat.sendMessage()">
+    <input type="text" ng-model="chat.message">
+    <input type="submit" value="Send">
+  </form>
+</div>

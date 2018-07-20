@@ -4,8 +4,10 @@
     <link href="https://fonts.googleapis.com/css?family=Quantico" rel="stylesheet">
     <meta charset="utf-8">
     <title>Blackhole Market</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
 		<script src="/js/validation.js" charset="utf-8"></script>
+		<script src="/js/services.js" charset="utf-8"></script>
 		<script src="/js/app.js" charset="utf-8"></script>
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/skeleton.css">
@@ -21,8 +23,6 @@
     </div>
 
       <h1>{{ ctrl.title }}</h1>
-
-
 
     <div id="review-board">
       <div id="reviews">
@@ -46,6 +46,9 @@
         <p>"My quantum phase deflector arrived in perfect condition and a day earlier! Thank you!"<br/>-Carlos</p><br/>
 
         <p>"Best neutrino bomb I've ever used... ever!"<br/>-Kace</p><br/>
+
+        <div class="chat-dialog"  ng-include="'partials/chat.html'">
+        </div>
 
 
       </div>

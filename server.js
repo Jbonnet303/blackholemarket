@@ -3,6 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
+
+// Custom Modules
 const securityUtils = require('./utils/securityUtils.js');
 
 // Global variables
@@ -36,7 +38,18 @@ mongoose.connect(mongoUri, { useNewUrlParser: true });
 mongoose.connection.on('error', (err) => console.log('Mongoose error:', err));
 mongoose.connection.once('open', ()=> console.log('Mongoose connection open...'));
 
+// Start a socket.io connection
+const http = require('http').Server(app);
+const socket_io = require('socket.io')(http);
+socket_io.on('connection', (socket)=>{
+  // Listen for 'new_message' events
+  socket.on('new_message', (message)=>{
+    // Let everyone else know about the message
+    socket.broadcast.emit('new_message', message);
+  });
+});
+
 // Start the server
-app.listen(port, ()=>{
+http.listen(port, ()=>{
   console.log("Server listening on port", port);
 });
