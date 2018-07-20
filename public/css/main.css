@@ -11,6 +11,11 @@ html {
   background-size: cover;
 }
 
+/* Style Added To Paragraph Tag */
+p {
+  color: #0ef216;
+}
+
 /* Style Added To H1 Tag */
 h1 {
   font-family: 'Quantico', sans-serif;
@@ -104,5 +109,49 @@ input[type="password"], textarea {
     0% {
     border-color: #54e014;
     box-shadow: 0 0 50px rgba(0,255,0,.6), inset 0 0 50px rgba(0,255,0,.6), 0 5px 0 #5bfc16;
+    }
+}
+
+/* Set the font, lean the board, position it */
+#review-board {
+  font-family: 'Quantico', sans-serif;
+  transform: perspective(300px) rotateX(25deg);
+  transform-origin: 50% 100%;
+  text-align: justify;
+  position: absolute;
+  margin-left: -9em;
+  overflow: hidden;
+  font-size: 120%;
+  height: 20em;
+  width: 18em;
+  bottom: 0;
+  left: 50%;
+}
+
+#review-board:after {
+  position: absolute;
+  content: ' ';
+  bottom: 60%;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+/* Scrolling Animation and Position It */
+#reviews {
+  animation: scroll 60s linear 2s;
+  animation-duration: 120s;
+  animation-iteration-count: infinite;
+  position: absolute;
+  top: 100%;
+}
+
+/* Keyframes Added For Scroll Text Animation */
+@keyframes scroll {
+    0% {
+        top: 100%;
+    }
+    100% {
+        top: -150%;
     }
 }
