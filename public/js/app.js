@@ -1,19 +1,23 @@
 // Create the angular app
 const app = angular.module("BHMApp", []);
 
+// Register the userInfo service
+app.service('$userInfo', UserInfo);
+
 // The main controller
-app.controller("MainController", ['$http', function($http) {
+app.controller("MainController", ['$scope', '$http', '$userInfo', function($scope, $http, $userInfo) {
   // A trick to make referencing controller variables the same
   // from the index.html and inside the folder
   const ctrl = this;
   // All references from now on will user ctrl.<ref> instead of
   // this.<ref>
   ctrl.title = "Blackhole Market";
-  ctrl.credBtnText = 'log in';
-  ctrl.credErrorMessage = '';
-  ctrl.isLogIn = true;
   ctrl.curUser = null;
-  ctrl.creds = {};
+
+  // Simple helper function to set the user info (mostly for and easy breakpoint)
+  ctrl.setCurUser = (info) => {
+    ctrl.curUser = info;
+  }
 
   // Changes the functionality of the cred form
   ctrl.toggleCredFormType = (makeLogIn) => {
@@ -23,15 +27,16 @@ app.controller("MainController", ['$http', function($http) {
     } else {
       ctrl.credBtnText = 'sign up';
     }
+    ctrl.credErrorMessage = '';
   }
 
   // Clears out the create user/log in form
   // When cleared, it always resets to a log in form
   ctrl.resetCredForm = () => {
-    ctrl.creds = {};
     ctrl.isLogIn = true;
     ctrl.credErrorMessage = '';
     ctrl.credBtnText = 'log in';
+    ctrl.creds = {username:'', password:''};
   }
 
   // Perform the correct action when the cred button is pressed
@@ -43,95 +48,89 @@ app.controller("MainController", ['$http', function($http) {
     }
   }
 
-  // Get the user information for the logged in user
-  ctrl.getUserInfo = () => {
-    $http({
-      method: 'GET',
-      url: '/sessions'
-    }).then((response)=>{
-      // Keep track of the logged in user
-      ctrl.curUser = response.data;
-    }, (error)=>{
-      // Ignore unauthenticated errors
-      if (error.status != 401) {
-        // Log error for debugging purposes
-        console.log("HTTP Error:", error);
-      }
-    }).catch((err)=>{ console.log("Promise Error:", err); });
-  }
-
   // Log out of the page
-  ctrl.doLogOut = () => {
-    // Call the session log out route in the backend
-    $http({
-      method: 'DELETE',
-      url: '/sessions'
-    }).then((response)=>{
-      // Reset the current user object
-      ctrl.curUser = null;
-    }, (error)=>{
-      // Log error for debugging purposes
-      console.log("HTTP Error:", error);
-    }).catch((err)=>{ console.log("Promise Error:", err); });
+  ctrl.doLogOut = async () => {
+    try {
+      // Call the session log out route in the backend
+      await $http({method: 'DELETE', url: '/sessions'});
+      // Clear the current user object
+      ctrl.setCurUser(null);
+      // Make sure the page refelcts the model changes
+      $scope.$apply();
+    } catch (error) {
+      // Log errors for debugging purposes
+      console.log("Log Out Error:", error);
+    }
   }
 
   // Attempt to log in to the market
-  ctrl.doLogIn = () => {
-    // Call the session log in route in the backend
-    $http({
-      method: 'POST',
-      url: '/sessions',
-      data: ctrl.creds
-    }).then((response)=>{
-      // Keep track of the logged in user
-      ctrl.curUser = response.data;
+  ctrl.doLogIn = async () => {
+    try {
+      // Call the session log in route in the backend
+      await $http({method: 'POST', url: '/sessions', data: ctrl.creds});
+      // Get the updated user info
+      let info = await $userInfo.get();
+      // Update the current user object
+      ctrl.setCurUser(info);
       // Clear the form
       ctrl.resetCredForm();
-    }, (error)=>{
+      // Make sure the page refelcts the model changes
+      $scope.$apply();
+    } catch (error) {
       // Display the error message
       ctrl.credErrorMessage = error.data.message;
       if (error.status != 401) {
         // Log non-401 errors for debugging purposes
-        console.log("HTTP Error:", error);
+        console.log("Log In Error:", error);
       }
-    }).catch((err)=>{ console.log("Promise Error:", err); });
+    }
   }
 
   // Attempt to sign up for the market
-  ctrl.doSignUp = () => {
-    // Validate the inputs first
-    let userError = validateUsername(ctrl.creds.username);
-    if (userError) {
-      // The username wasn't valid
-      ctrl.credErrorMessage = userError;
-      return;
-    }
-    let passError = validateUsername(ctrl.creds.password);
-    if (passError) {
-      // The username wasn't valid
-      ctrl.credErrorMessage = passError;
-      return;
-    }
-    // Call the session log in route in the backend
-    $http({
-      method: 'POST',
-      url: '/users',
-      data: ctrl.creds
-    }).then((response)=>{
+  ctrl.doSignUp = async () => {
+    try {
+      // Validate the inputs first
+      let userError = validateUsername(ctrl.creds.username);
+      if (userError) {
+        // The username wasn't valid
+        ctrl.credErrorMessage = userError;
+        return false;
+      }
+      let passError = validateUsername(ctrl.creds.password);
+      if (passError) {
+        // The username wasn't valid
+        ctrl.credErrorMessage = passError;
+        return false;
+      }
+      // Call the user create route in the backend
+      await $http({method: 'POST', url: '/users', data: ctrl.creds});
+      // Get the updated user info
+      let info = await $userInfo.get();
+      // Update the current user object
+      ctrl.setCurUser(info);
       // Clear the form
       ctrl.resetCredForm();
-      // Grab the new user information
-      ctrl.getUserInfo();
-    }, (error)=>{
+      // Make sure the page refelcts the model changes
+      $scope.$apply();
+    } catch (error) {
       // Display the error message
       ctrl.credErrorMessage = error.data.message;
       if (error.status != 400) {
-        // Log non-400 errors for debugging purposes
-        console.log("HTTP Error:", error);
+        // Log non-401 errors for debugging purposes
+        console.log("Sign Up Error:", error);
       }
-    }).catch((err)=>{ console.log("Promise Error:", err); });
+    }
   }
 
+  // Initialize the login form variables
+  ctrl.resetCredForm();
   // Call to get the user info on load to restore a session on a page refresh
-  ctrl.getUserInfo();
+  $userInfo.get().then((info)=>{
+    // Update the current user object
+    ctrl.setCurUser(info);
+    // Make sure the page refelcts the model changes
+    $scope.$apply();
+  });
 }])
+
+// A Controller for the chat functionality
