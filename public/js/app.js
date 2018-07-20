@@ -124,9 +124,66 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       $scope.$apply();
     }
   }
-
+  //Call to backend to create a new item
+  ctrl.createItem = function(){
+          $http({
+              method:'POST',
+              url: '/items',
+              data: {
+                name: ctrl.name,
+                img: ctrl.img,
+                qty: ctrl.qty,
+                price: ctrl.price
+              }
+          }).then(function(response){
+              ctrl.getItems();
+          }, function(){
+              console.log('error');
+          });
+      }
+  //Call to backend to list all items
+  ctrl.getItems = function(){
+      $http({
+          method:'GET',
+          url: '/items',
+      }).then(function(response){
+          ctrl.items = response.data;
+      }, function(){
+          console.log('error');
+      });
+  };
+  //Call to backend to delete the item
+  ctrl.deleteItem = function(item){
+    $http({
+        method:'DELETE',
+        url: '/items/' + item._id
+    }).then(function(response){
+          ctrl.getItems();
+        }, function(error){
+          console.log('error');
+        });
+      };
+  //Call to backend to edit the item
+  ctrl.editItem = function(item){
+    $http({
+        method:'PUT',
+        url: '/items/' + item._id,
+        data: {
+          name: ctrl.updatedName,
+          img: ctrl.updatedImg,
+          qty: ctrl.updatedQty,
+          price: ctrl.updatedPrice
+        }
+    }).then(function(response){
+        ctrl.getItems();
+        }, function(error){
+          console.log('error');
+        });
+      };
   // Initialize the login form variables
   ctrl.resetCredForm();
+  //Calls all the items to show on the page
+  ctrl.getItems();
   // Call to get the user info on load to restore a session on a page refresh
   $userInfo.refresh().then((info)=>{
     // Update the current user object
