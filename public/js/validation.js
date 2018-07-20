@@ -67,7 +67,7 @@ const parseArray = (str, fallback=null) => {
 const validatePassword = (str) => {
   let trimmed = cleanString(str);
   if (trimmed.length < minPasswordLength) {
-    return `Username must be at least ${minPasswordLength} characters long.`;
+    return `Password must be at least ${minPasswordLength} characters long.`;
   }
   return null;
 }

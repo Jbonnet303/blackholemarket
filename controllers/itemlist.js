@@ -1,6 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const Shoplist = require('../models/itemlist.js');
+
+// Common helper functions
+const securityUtils = require('../utils/securityUtils.js');
+
+// DB connectivity
+const Itemlist = require('../models/itemlist.js');
+
+// Custom middleware to protect the create, update, and delete routes
+// Makes sure that all routes except for the index route can only be used
+// by users who are logged in (have the loggedInUser session object)
+router.use(securityUtils.authenticated('loggedInUser', null, ['/']));
 
 //Shows all items
 router.get('/', (req, res)=>{
@@ -24,14 +34,14 @@ router.delete('/:id', (req, res)=>{
     });
 });
 //Creates new item
-router.post('/', (req, res)=>{
+router.post('/new', (req, res)=>{
     Itemlist.create(req.body, (err, createdItem)=>{
       if(err){
         //Failure to create item
         console.log('Failure to create item:', err)
         res.status(500).json({
           status: 500,
-          message: 'Failed to create item with id:' + request.params.id
+          message: 'Failed to create item'
         })
       } else {
           res.json(createdItem);
