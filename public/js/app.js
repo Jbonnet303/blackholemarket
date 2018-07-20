@@ -55,11 +55,12 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       await $http({method: 'DELETE', url: '/sessions'});
       // Clear the current user object
       ctrl.setCurUser(null);
-      // Make sure the page refelcts the model changes
-      $scope.$apply();
     } catch (error) {
       // Log errors for debugging purposes
       console.log("Log Out Error:", error);
+    } finally {
+      // Make sure the page refelcts the model changes
+      $scope.$apply();
     }
   }
 
@@ -74,8 +75,6 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       ctrl.setCurUser(info);
       // Clear the form
       ctrl.resetCredForm();
-      // Make sure the page refelcts the model changes
-      $scope.$apply();
     } catch (error) {
       // Display the error message
       ctrl.credErrorMessage = error.data.message;
@@ -83,6 +82,9 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
         // Log non-401 errors for debugging purposes
         console.log("Log In Error:", error);
       }
+    } finally {
+      // Make sure the page refelcts the model changes
+      $scope.$apply();
     }
   }
 
@@ -110,8 +112,6 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       ctrl.setCurUser(info);
       // Clear the form
       ctrl.resetCredForm();
-      // Make sure the page refelcts the model changes
-      $scope.$apply();
     } catch (error) {
       // Display the error message
       ctrl.credErrorMessage = error.data.message;
@@ -119,6 +119,9 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
         // Log non-401 errors for debugging purposes
         console.log("Sign Up Error:", error);
       }
+    } finally {
+      // Make sure the page refelcts the model changes
+      $scope.$apply();
     }
   }
 
@@ -132,5 +135,3 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
     $scope.$apply();
   });
 }])
-
-// A Controller for the chat functionality
