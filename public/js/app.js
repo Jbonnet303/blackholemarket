@@ -4,6 +4,21 @@ const app = angular.module("BHMApp", []);
 // Register the userInfo service
 app.service('$userInfo', UserInfo);
 
+// Register a directive for handling iframe loads
+// Code from: https://stackoverflow.com/questions/15882326/angular-onload-function-on-an-iframe
+app.directive('iframeOnload', [function() {
+  return {
+    scope: {
+      callBack: '&iframeOnload'
+    },
+    link: function(scope, element, attrs){
+      element.on('load', function(){
+        return scope.callBack();
+      })
+    }
+  };
+}]);
+
 // The main controller
 app.controller("MainController", ['$scope', '$http', '$userInfo', function($scope, $http, $userInfo) {
   // A trick to make referencing controller variables the same
@@ -201,7 +216,9 @@ app.controller("ChatController", ['$scope', '$sce', '$userInfo', function($scope
   // A reference to the chat window DOM object
   const chatWindow = document.getElementById('chat-messages');
   // All references from now on will use chat.<ref> instead of this.<ref>
-  chat.iframeDest = $sce.trustAsResourceUrl('https://psycoder42.github.io/fight-to-win/game/index.html');
+  chat.iframeClass = 'hidden';
+  chat.preloaderClass = 'preloader';
+  chat.iframeDest = '_blank';
   chat.message = '';
   chat.receivedMessages = [];
   chat.showModal = false;
@@ -220,6 +237,33 @@ app.controller("ChatController", ['$scope', '$sce', '$userInfo', function($scope
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
+  // A function to switch from the preloader to the iframe content
+  // This needs to use $scope rather than chat to be able to use the custom directive
+  $scope.switchIFrameContent = () => {
+    // Update the classes to swap visibility
+    chat.preloaderClass = 'hidden';
+    chat.iframeClass = 'ftw';
+    // Make sure the page refelcts the model changes
+    $scope.$apply();
+  }
+
+  // A function to open the modal
+  const openModal = () => {
+    // Show the modal on the page
+    chat.showModal = true;
+    // Update the iframe content destination
+    chat.iframeDest = $sce.trustAsResourceUrl('https://psycoder42.github.io/fight-to-win/game/index.html');
+  }
+
+  // The close button was pressed on the modal
+  chat.closeModal = () => {
+    // Update the classes to reset default visibility
+    chat.iframeClass = 'hidden';
+    chat.preloaderClass = 'provider';
+    // Hide the modal
+    chat.showModal = false;
+  }
+
   // Figure out what class should be assigned to the username span
   chat.getUserClass = (username) => {
     return (getUsername()==username ? 'self' : 'stranger');
@@ -231,7 +275,7 @@ app.controller("ChatController", ['$scope', '$sce', '$userInfo', function($scope
     if (chat.message == 'Fight to Win!') {
       // Show the easter egg and don't send the message
       chat.message = '';
-      chat.showModal = true;
+      openModal();
       return;
     }
     let userMessage = cleanString(chat.message);

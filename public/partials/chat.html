@@ -1,23 +1,25 @@
 <div ng-if="ctrl.curUser" ng-controller="ChatController as chat">
-  <div id="chat-messages">
-    <div class="message" ng-repeat="msg in chat.receivedMessages">
-      <span class="{{ chat.getUserClass(msg.user) }}">{{ msg.user + ':' }}</span>
-      {{ msg.message }}
+  <div class="chat-dialog">
+    <div id="chat-messages">
+      <div class="message" ng-repeat="msg in chat.receivedMessages">
+        <span class="{{ chat.getUserClass(msg.user) }}">{{ msg.user + ':' }}</span>
+        {{ msg.message }}
+      </div>
     </div>
+    <form class="chat-input" ng-submit="chat.sendMessage()">
+      <input type="text" ng-model="chat.message">
+      <input type="submit" value="Send">
+    </form>
   </div>
-  <form class="chat-input" ng-submit="chat.sendMessage()">
-    <input type="text" ng-model="chat.message">
-    <input type="submit" value="Send">
-  </form>
   <div ng-if="chat.showModal" class="modal">
     <div class="popup">
-      <div class="close-popup" ng-click="chat.showModal=false">X</div>
-      <div id="pl" class="preloader">
+      <div class="close-popup" ng-click="chat.closeModal()">X</div>
+      <div id="pl"  ng-class="chat.preloaderClass">
         <h4>Attempting to contact deep space scout ship...</h4>
         <img src="/images/loading.svg" alt="please wait">
       </div>
-      <iframe id='ftw' scrolling="no" class="hidden" width="700px" height="720px" ng-src="{{ chat.iframeDest }}"
-        onload="document.getElementById('pl').className='hidden';document.getElementById('ftw').className='ftw';">
+      <iframe id='ftw' ng-class="chat.iframeClass" scrolling="no" width="700px"
+        height="720px" ng-src="{{ chat.iframeDest }}" iframe-onload="switchIFrameContent()">
       </iframe>
     </div>
   </div>
