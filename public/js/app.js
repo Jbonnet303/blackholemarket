@@ -128,7 +128,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   ctrl.createItem = function(){
           $http({
               method:'POST',
-              url: '/items',
+              url: '/items/new',
               data: {
                 name: ctrl.name,
                 img: ctrl.img,
