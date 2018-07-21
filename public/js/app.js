@@ -203,6 +203,7 @@ app.controller("ChatController", ['$scope', '$userInfo', function($scope, $userI
   // All references from now on will use chat.<ref> instead of this.<ref>
   chat.message = '';
   chat.receivedMessages = [];
+  chat.showModal = false;
 
   // A special variable for the socket.io interaction
   chat.socket = io();
@@ -225,6 +226,13 @@ app.controller("ChatController", ['$scope', '$userInfo', function($scope, $userI
 
   // Send a chat message to whomever is connected
   chat.sendMessage = () => {
+    // An easter egg
+    if (chat.message == 'Fight to Win!') {
+      // Show the easter egg and don't send the message
+      chat.message = '';
+      chat.showModal = true;
+      return;
+    }
     let userMessage = cleanString(chat.message);
     // Don't send a message that is only whitespace
     if (userMessage.length > 0) {

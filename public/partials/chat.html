@@ -9,4 +9,15 @@
     <input type="text" ng-model="chat.message">
     <input type="submit" value="Send">
   </form>
+  <div ng-if="chat.showModal" class="modal">
+    <div class="popup">
+      <div class="close-popup" ng-click="chat.showModal=false">X</div><div id="pl" class="preloader">
+        <h4>Attempting to contact deep space scout ship...</h4>
+        <img src="/images/loading.svg" alt="please wait">
+      </div><iframe id='ftw' scrolling="no" class="hidden" width="700px" height="720px"
+          onload="document.getElementById('pl').className='hidden';document.getElementById('ftw').className='ftw';"
+          src="https://psycoder42.github.io/fight-to-win/game/index.html">
+      </iframe>
+    </div>
+  </div>
 </div>
