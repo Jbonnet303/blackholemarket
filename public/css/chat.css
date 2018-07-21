@@ -1,0 +1,98 @@
+/* The message area of the chat dialog */
+#chat-messages {
+  height: 7em;
+  margin: 0;
+  flex-grow: 1;
+  text-align: left;
+  border: 1px inset silver;
+  background-color: black;
+  overflow-y: auto;
+  color: #0ef216;
+}
+
+/* Individual displayed messages */
+.message {
+  margin: 3px 5px;
+}
+
+/* The input area of the chat dialog */
+.chat-input {
+  opacity: .5;
+  display: flex;
+}
+
+/* The chat input box */
+.chat-input > input[type="text"] {
+  flex-grow: 1;
+}
+
+/* The chat send button */
+.chat-input > input[type="submit"] {
+  color: black;
+  background-color: #0ef216;
+}
+
+/* Message user name styles */
+.self {
+  color: yellow;
+  font-style: italic;
+}
+.stranger {
+  color: orange;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.popup {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  height: 700px;
+  width: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-popup {
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  margin: 25px;
+  font-weight: bolder;
+  cursor: pointer;
+  padding: 2px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.preloader {
+  text-align: center;
+}
+
+.ftw {
+  overflow: hidden;
+  position: relative;
+  top: -10px;
+  border: 0;
+}
+
+.hidden {
+  display: none;
+}
