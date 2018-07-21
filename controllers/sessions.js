@@ -13,7 +13,8 @@ router.get('/', (req, res)=>{
   if(req.session.loggedInUser){
     res.json(req.session.loggedInUser);
   } else {
-    securityUtils.authFailedJson(res);
+    // Return a status of success but empty json
+    res.status(200).json({});
   }
 });
 
