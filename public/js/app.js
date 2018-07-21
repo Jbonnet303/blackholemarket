@@ -220,8 +220,10 @@ app.controller("ChatController", ['$scope', '$sce', '$userInfo', function($scope
   chat.preloaderClass = 'preloader';
   chat.iframeDest = '_blank';
   chat.message = '';
-  chat.receivedMessages = [];
+  chat.receivedMessages = [{user:'system',message:'Welcome to the Blackhole Market user chat!'}];
+  chat.chatVisible = false;
   chat.showModal = false;
+  chat.tabText = 'Show Chat';
 
   // A special variable for the socket.io interaction
   chat.socket = io();
@@ -262,6 +264,25 @@ app.controller("ChatController", ['$scope', '$sce', '$userInfo', function($scope
     chat.preloaderClass = 'provider';
     // Hide the modal
     chat.showModal = false;
+  }
+
+  // Toggle the chat dialog
+  chat.toggleDialog = () => {
+    // Show or hide as appropriate
+    if (chat.chatVisible) {
+      // Hide the chat
+      chat.tabText = 'Show Chat';
+    } else {
+      // Show
+      chat.tabText = 'Hide Chat';
+    }
+    // Record the new state
+    chat.chatVisible = !chat.chatVisible;
+  }
+
+  // Figure out what class should be assigned to the chat dialog
+  chat.getDialogClass = () => {
+    return (chat.chatVisible ? 'chat-container show' : 'chat-container');
   }
 
   // Figure out what class should be assigned to the username span

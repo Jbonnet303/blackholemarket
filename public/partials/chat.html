@@ -1,20 +1,44 @@
 <div ng-if="ctrl.curUser" ng-controller="ChatController as chat">
-  <div class="chat-dialog">
+  <div ng-class="chat.getDialogClass()">
+    <div class="chat-tab" ng-click="chat.toggleDialog()">
+      <!-- Icon for showing the chat window -->
+      <svg ng-hide="chat.chatVisible" class="chat-tab-icon" version="1.1" viewBox="0 0 8.9449 16.03" xmlns="http://www.w3.org/2000/svg">
+       <g transform="translate(-55.059 -121.87)" fill="none" stroke-linecap="round">
+        <path d="m55.562 129.46 3.9688-6.6146 3.9688 6.6146"/>
+        <path d="m55.562 133.42 3.9688-6.6146 3.9687 6.6146"/>
+        <path d="m55.562 137.39 3.9688-6.6146 3.9688 6.6146"/>
+       </g>
+      </svg>
+      <!-- Icon for hiding the chat window -->
+      <svg ng-show="chat.chatVisible" class="chat-tab-icon" version="1.1" viewBox="0 0 8.9449 16.03" xmlns="http://www.w3.org/2000/svg">
+       <g transform="translate(-55.059 -121.87)" fill="none" stroke-linecap="round">
+        <path d="m55.562 130.31 3.9688 6.6146 3.9688-6.6146"/>
+        <path d="m55.562 126.34 3.9688 6.6146 3.9687-6.6146"/>
+        <path d="m55.562 122.38 3.9688 6.6146 3.9688-6.6146"/>
+       </g>
+      </svg>
+      {{ chat.tabText }}
+    </div>
     <div id="chat-messages">
       <div class="message" ng-repeat="msg in chat.receivedMessages">
-        <span class="{{ chat.getUserClass(msg.user) }}">{{ msg.user + ':' }}</span>
-        {{ msg.message }}
+        <span ng-if="msg.user=='system'" class="system">{{ msg.message }}</span>
+        <span ng-if="msg.user!='system'" >
+          <span class="{{ chat.getUserClass(msg.user) }}">
+            {{ msg.user + ':' }}
+          </span>
+          {{ msg.message }}
+        </span>
       </div>
     </div>
     <form class="chat-input" ng-submit="chat.sendMessage()">
-      <input type="text" ng-model="chat.message">
+      <input type="text" placeholder="Write your message here..." ng-model="chat.message">
       <input type="submit" value="Send">
     </form>
   </div>
   <div ng-if="chat.showModal" class="modal">
     <div class="popup">
       <div class="close-popup" ng-click="chat.closeModal()">X</div>
-      <div id="pl"  ng-class="chat.preloaderClass">
+      <div id="pl" ng-class="chat.preloaderClass">
         <h4>Attempting to contact deep space scout ship...</h4>
         <img src="/images/loading.svg" alt="please wait">
       </div>
