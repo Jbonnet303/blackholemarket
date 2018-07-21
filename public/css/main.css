@@ -1,7 +1,7 @@
 /* Main Background Image Set */
 html {
   position: absolute;
-  background: url(https://www.nasa.gov/sites/default/files/cygx1_ill.jpg) center center;
+  background: url('../images/background.jpg') center center;
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
