@@ -194,13 +194,14 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
 }])
 
 // A controller for the chat functionality
-app.controller("ChatController", ['$scope', '$userInfo', function($scope, $userInfo) {
+app.controller("ChatController", ['$scope', '$sce', '$userInfo', function($scope, $sce, $userInfo) {
   // A trick to make referencing controller variables the same
   // from the index.html and inside the controller
   const chat = this;
   // A reference to the chat window DOM object
   const chatWindow = document.getElementById('chat-messages');
   // All references from now on will use chat.<ref> instead of this.<ref>
+  chat.iframeDest = $sce.trustAsResourceUrl('https://psycoder42.github.io/fight-to-win/game/index.html');
   chat.message = '';
   chat.receivedMessages = [];
   chat.showModal = false;
