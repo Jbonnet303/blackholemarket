@@ -1,14 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" ng-app="BHMApp">
   <head>
+    <link href="https://fonts.googleapis.com/css?family=Quantico" rel="stylesheet">
     <meta charset="utf-8">
+    <link rel="shortcut icon" href="favicon.ico">
     <title>Blackhole Market</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
+		<script src="/js/validation.js" charset="utf-8"></script>
+		<script src="/js/services.js" charset="utf-8"></script>
 		<script src="/js/app.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/chat.css">
   </head>
+
   <body ng-controller="MainController as ctrl">
 
-    <h1>{{ ctrl.title }}</h1>
+    <div class="text glow">
+      <header>
+        <div ng-include="'partials/login.html'"></div>
+      </header>
+    </div>
+
+      <h1>{{ ctrl.title }}</h1>
+
+
+      <div ng-include="'partials/additem.html'"></div>
+
+
+      <!-- <div ng-include="'partials/edititem.html'"></div> -->
+
+      <!-- <h3>Blackhole Products</h3> -->
+
+      <div ng-include="'partials/showitem.html'"></div>
+
+
+
+      <footer>
+    <div id="review-board">
+      <div id="reviews">
+
+        <p>"Great sale on dark matter! Buy 1 bottle get the other one free!"<br/>-Bobby</p><br/>
+
+        <p>"The Meeseeks Box works great! Way better than the one I bought off Rick's Place thank you!"<br/>-Matt</p>
+
+        <p>"This will be the third planet I've purchased from the Blackhole Market. Each time the service has been Great!"<br/>-Pat</p><br/>
+
+        <p>"Not only do you have great prices, ask no questions, you shipped my star dust the next day."<br/>-Joe</p><br/>
+
+        <p>"Thank you very much for your great service."<br/>-Carol</p><br/>
+
+        <p>"Keith, Brantley, & Jon, I just received my moon rocks. I love them!"<br/>-Emily</p><br/>
+
+        <p>"The best supercooled combat impulse engine I have ever bought."<br/>-Kathy</p><br/>
+
+        <p>"Finally a website with a consistent suppy of cryoplasma infused singularity cores!"<br/>-Cara</p><br/>
+
+        <p>"My quantum phase deflector arrived in perfect condition and a day earlier! Thank you!"<br/>-Carlos</p><br/>
+
+        <p>"Best neutrino bomb I've ever used... ever!"<br/>-Kace</p><br/>
+
+      </div>
+    </div>
+
+    </footer>
+
+    <div class="footer" ng-if="ctrl.curUser">
+      <h6>GA WDI - KEITH SWANSON - BRANTLEY BURTON - JON BONNET</h6>
+    </div>
+
+    <div ng-include="'partials/chat.html'"></div>
 
   </body>
 </html>
