@@ -9,6 +9,9 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   // A trick to make referencing controller variables the same
   // from the index.html and inside the controller
   const ctrl = this;
+
+  //Hide edit form after done
+  ctrl.indexOfEditFormToShow = null;
   // All references from now on will use ctrl.<ref> instead of this.<ref>
   ctrl.title = "Blackhole Market";
   ctrl.curUser = null;
@@ -126,6 +129,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   }
   //Call to backend to create a new item
   ctrl.createItem = function(){
+    console.log("create item push");
           $http({
               method:'POST',
               url: '/items/new',
@@ -176,6 +180,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
         }
     }).then(function(response){
         ctrl.getItems();
+        ctrl.indexOfEditFormToShow = null;
         }, function(error){
           console.log('error');
         });

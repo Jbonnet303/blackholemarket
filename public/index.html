@@ -26,8 +26,16 @@
 
       <div class="chat-dialog"      ng-include="'partials/chat.html'"></div>
 
-      <div ng-include="'partials/additem.html'"></div>
 
+      <!-- <div ng-include="'partials/edititem.html'"></div> -->
+
+      <!-- <h3>Blackhole Products</h3> -->
+
+      <div ng-include="'partials/showitem.html'"></div>
+
+
+
+      <footer>
     <div id="review-board">
       <div id="reviews">
 
@@ -52,6 +60,12 @@
         <p>"Best neutrino bomb I've ever used... ever!"<br/>-Kace</p><br/>
 
       </div>
+    </div>
+
+    </footer>
+
+    <div class="footer" ng-if="ctrl.curUser">
+      <h6>GA WDI - KEITH SWANSON - BRANTLEY BURTON - JON BONNET</h6>
     </div>
 
   </body>

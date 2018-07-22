@@ -3,12 +3,23 @@ html {
   position: absolute;
   background: url(https://www.nasa.gov/sites/default/files/cygx1_ill.jpg) center center;
   width: 100%;
-  height: 100%;
+  height: auto;
   background-repeat: no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+/* Style Added To Show Item Tags */
+  dl, dd, dt {
+  text-align: center;
+}
+
+/* Style Added  To Make Images Same Size */
+img {
+  width: 150px;
+  height: 150px;
 }
 
 /* Style Added To Paragraph Tag */
@@ -21,6 +32,16 @@ body {
   text-align: center;
 }
 
+/* Button Style Added */
+button {
+  background-color: silver;
+}
+
+/* Button Hover Style Added */
+button:hover {
+  background-color: steelblue;
+}
+
 /* Style Added To H1 Tag */
 h1 {
   font-family: 'Quantico', sans-serif;
@@ -31,18 +52,74 @@ h1 {
   text-shadow: 35px 35px 20px #000000;
 }
 
+/* Style Added To H3 Tag */
+h3 {
+  font-family: 'Quantico', sans-serif;
+  text-align: center;
+  font-size: 40px;
+  color: #0ef216;
+  text-shadow: 35px 35px 20px #000000;
+}
+
+/* Style Added To Scrolling Comments footer */
+/* Creates Space At Bottom Of Page For Review Comments */
+footer {
+  padding-top: 50px;
+}
+
 /* Username Textarea Background Style */
 input[type="text"], textarea {
-  background-color : #b7e7ff;
+  background-color : #0ef216;
 }
 
 /* Password Textarea Background Style */
 input[type="password"], textarea {
-  background-color : #b7e7ff;
+  background-color : #0ef216;
+}
+
+/* Number Textarea Background Style */
+input[type="number"], textarea {
+  background-color : #0ef216;
+}
+
+/* Password Submit Background Style */
+input[type="submit"], textarea {
+  background-color : silver;
+}
+
+/* Input Hover Background Style */
+input:hover[type="submit"], textarea {
+  background-color : steelblue;
+}
+
+/* Style Added To Store Hours  */
+.store-hours {
+  padding-right: 600px;
+  color: #0ef216;
+  font-family: 'Quantico', sans-serif;
+  text-align: left;
+}
+
+/* Style Added To Footer Tag */
+.footer {
+  font-size: 5px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  color: #0ef216;
+  text-align: right;
+}
+
+/* Message Telling Vistors To Login To Buy Items */
+.members-only {
+  text-align: center;
+  color: #0ef216;
 }
 
 /* Style Added To Login/logout Buttons */
-#login-button, #logout-button {
+#login-button, #logout-button, #signup-button {
   height: 39px;
   background-color: #0ef216;
   color: black;
@@ -122,6 +199,29 @@ input[type="password"], textarea {
   color: orange;
 }
 
+/* Style Added To Show Container */
+.showitem-container {
+  margin: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: black;
+  opacity: .9;
+  border: 5px solid silver;
+  color: steelblue;
+  font-family: 'Quantico', sans-serif;
+}
+
+/* Style Added To Items In Show Container */
+.items-container {
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 /* Glow Laser Beam Added Surrounding Header */
 .glow {
   animation-name: glow;
@@ -179,7 +279,7 @@ input[type="password"], textarea {
   margin-left: -9em;
   overflow: hidden;
   font-size: 120%;
-  height: 20em;
+  height: 5em;
   width: 18em;
   bottom: 0;
   left: 50%;
@@ -196,8 +296,8 @@ input[type="password"], textarea {
 
 /* Scrolling Animation and Position It */
 #reviews {
-  animation: scroll 60s linear 2s;
-  animation-duration: 120s;
+  animation: scroll 30s linear 2s;
+  animation-duration: 30s;
   animation-iteration-count: infinite;
   position: absolute;
   top: 100%;
