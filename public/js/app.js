@@ -24,17 +24,22 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   // A trick to make referencing controller variables the same
   // from the index.html and inside the controller
   const ctrl = this;
-
-  //Hide edit form after done
-  ctrl.indexOfEditFormToShow = null;
   // All references from now on will use ctrl.<ref> instead of this.<ref>
   ctrl.title = "Blackhole Market";
   ctrl.curUser = null;
+
+  //Hide edit form after done
+  ctrl.indexOfEditFormToShow = null;
 
   // Simple helper function to set the user info (shares it with the chat controller)
   ctrl.setCurUser = (info) => {
     ctrl.curUser = info;
     $userInfo.set(info);
+  }
+
+  // Checkes whether a user is logged in and an admin
+  ctrl.canEdit = () => {
+    return (ctrl.curUser && ctrl.curUser.isAdmin);
   }
 
   // Changes the functionality of the cred form
@@ -116,7 +121,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
         ctrl.credErrorMessage = userError;
         return false;
       }
-      let passError = validateUsername(ctrl.creds.password);
+      let passError = validatePassword(ctrl.creds.password);
       if (passError) {
         // The username wasn't valid
         ctrl.credErrorMessage = passError;
@@ -142,64 +147,68 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       $scope.$apply();
     }
   }
+
   //Call to backend to create a new item
-  ctrl.createItem = function(){
-    console.log("create item push");
-          $http({
-              method:'POST',
-              url: '/items/new',
-              data: {
-                name: ctrl.name,
-                img: ctrl.img,
-                qty: ctrl.qty,
-                price: ctrl.price
-              }
-          }).then(function(response){
-              ctrl.getItems();
-          }, function(){
-              console.log('error');
-          });
+  ctrl.createItem = function() {
+    $http({
+      method: 'POST',
+      url: '/items/new',
+      data: {
+        name: ctrl.name,
+        img: ctrl.img,
+        qty: ctrl.qty,
+        price: ctrl.price
       }
+    }).then(function(response) {
+      ctrl.getItems();
+    }, function() {
+      console.log('error');
+    });
+  }
+
   //Call to backend to list all items
-  ctrl.getItems = function(){
-      $http({
-          method:'GET',
-          url: '/items',
-      }).then(function(response){
-          ctrl.items = response.data;
-      }, function(){
-          console.log('error');
-      });
+  ctrl.getItems = function() {
+    $http({
+      method: 'GET',
+      url: '/items',
+    }).then(function(response) {
+      ctrl.items = response.data;
+    }, function() {
+      console.log('error');
+    });
   };
+
   //Call to backend to delete the item
-  ctrl.deleteItem = function(item){
+  ctrl.deleteItem = function(item) {
     $http({
-        method:'DELETE',
-        url: '/items/' + item._id
-    }).then(function(response){
-          ctrl.getItems();
-        }, function(error){
-          console.log('error');
-        });
-      };
+      method: 'DELETE',
+      url: '/items/' + item._id
+    }).then(function(response) {
+      ctrl.getItems();
+    }, function(error) {
+      console.log('error');
+    });
+  };
+
   //Call to backend to edit the item
-  ctrl.editItem = function(item){
+  ctrl.editItem = function(item) {
     $http({
-        method:'PUT',
-        url: '/items/' + item._id,
-        data: {
-          name: ctrl.updatedName,
-          img: ctrl.updatedImg,
-          qty: ctrl.updatedQty,
-          price: ctrl.updatedPrice
-        }
-    }).then(function(response){
-        ctrl.getItems();
-        ctrl.indexOfEditFormToShow = null;
-        }, function(error){
-          console.log('error');
-        });
-      };
+      method: 'PUT',
+      url: '/items/' + item._id,
+      data: {
+        name: ctrl.updatedName,
+        img: ctrl.updatedImg,
+        qty: ctrl.updatedQty,
+        price: ctrl.updatedPrice
+      }
+    }).then(function(response) {
+      ctrl.getItems();
+      ctrl.indexOfEditFormToShow = null;
+    }, function(error) {
+      console.log('error');
+    });
+  };
+
   // Initialize the login form variables
   ctrl.resetCredForm();
   //Calls all the items to show on the page

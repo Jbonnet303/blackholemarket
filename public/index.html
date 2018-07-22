@@ -26,7 +26,7 @@
 
       <h1>{{ ctrl.title }}</h1>
 
-      <div ng-if="ctrl.curUser" ng-include="'partials/additem.html'"></div>
+      <div ng-if="ctrl.canEdit()" ng-include="'partials/additem.html'"></div>
 
       <div ng-include="'partials/showitem.html'"></div>
 

@@ -15,11 +15,11 @@
       <!-- <% } %> -->
 
       <div ng-if="$index != ctrl.indexOfEditFormToShow">
-      <button ng-if="ctrl.curUser"
+      <button ng-if="ctrl.canEdit()"
       ng-click="ctrl.indexOfEditFormToShow = $index"> Edit </button>
       </div>
 
-      <button href="#" ng-if="ctrl.curUser" ng-click="ctrl.deleteItem(product)">Delete Item</button><br/>
+      <button href="#" ng-if="ctrl.canEdit()" ng-click="ctrl.deleteItem(product)">Delete Item</button><br/>
 
 
 

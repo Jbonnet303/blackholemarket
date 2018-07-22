@@ -9,8 +9,8 @@ const Itemlist = require('../models/itemlist.js');
 
 // Custom middleware to protect the create, update, and delete routes
 // Makes sure that all routes except for the index route can only be used
-// by users who are logged in (have the loggedInUser session object)
-router.use(securityUtils.authenticated('loggedInUser', null, ['/']));
+// by users who are logged in (have the loggedInUser session object) and are admins
+router.use(securityUtils.admin('loggedInUser', 'isAdmin', null, ['/']));
 
 //Shows all items
 router.get('/', (req, res)=>{
