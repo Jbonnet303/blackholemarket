@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const userSchema = Schema({
     internalName: {type:String, required:true, unique:true},
     username: String,
-    password: String
+    password: String,
+    isAdmin: Boolean
 });
 
 const User = mongoose.model('User', userSchema);
