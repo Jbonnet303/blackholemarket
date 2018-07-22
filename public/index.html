@@ -26,46 +26,46 @@
 
       <h1>{{ ctrl.title }}</h1>
 
-
       <div ng-include="'partials/additem.html'"></div>
-
-
-      <!-- <div ng-include="'partials/edititem.html'"></div> -->
-
-      <!-- <h3>Blackhole Products</h3> -->
 
       <div ng-include="'partials/showitem.html'"></div>
 
-
-
       <footer>
-    <div id="review-board">
-      <div id="reviews">
+        <div id="review-board" ng-if="ctrl.curUser">
+          <div id="reviews" ng-if="ctrl.curUser">
 
-        <p>"Great sale on dark matter! Buy 1 bottle get the other one free!"<br/>-Bobby</p><br/>
+        <p>"Great sale on dark matter! Buy 1 bottle get the other one free!"<br/>-Karolin</p><br/>
 
         <p>"The Meeseeks Box works great! Way better than the one I bought off Rick's Place thank you!"<br/>-Matt</p>
 
-        <p>"This will be the third planet I've purchased from the Blackhole Market. Each time the service has been Great!"<br/>-Pat</p><br/>
+        <p>"Not only do you have great prices, ask no questions, you shipped my star dust the next day."<br/>-Jerrica</p><br/>
 
-        <p>"Not only do you have great prices, ask no questions, you shipped my star dust the next day."<br/>-Joe</p><br/>
+        <p>"Thank you very much for your great service."<br/>-Phoebe Buffay</p><br/>
 
-        <p>"Thank you very much for your great service."<br/>-Carol</p><br/>
+        <p>"Keith, Brantley, & Jon, I just received my moon rocks. I love them!"<br/>-Joey Tribbiani</p><br/>
 
-        <p>"Keith, Brantley, & Jon, I just received my moon rocks. I love them!"<br/>-Emily</p><br/>
+        <p>"The best supercooled combat impulse engine I have ever bought."<br/>-Rachel Green</p><br/>
 
-        <p>"The best supercooled combat impulse engine I have ever bought."<br/>-Kathy</p><br/>
+        <p>"Finally a website with a consistent suppy of cryoplasma infused singularity cores!"<br/>-Monica Bing</p><br/>
 
-        <p>"Finally a website with a consistent suppy of cryoplasma infused singularity cores!"<br/>-Cara</p><br/>
+        <p>"My quantum phase deflector arrived in perfect condition and a day earlier! Thank you!"<br/>-Chandler Bing</p><br/>
 
-        <p>"My quantum phase deflector arrived in perfect condition and a day earlier! Thank you!"<br/>-Carlos</p><br/>
+        <p>"Best neutrino bomb I've ever used... ever!"<br/>-Ross Geller</p><br/>
 
-        <p>"Best neutrino bomb I've ever used... ever!"<br/>-Kace</p><br/>
+        <p>"Great sale on dark matter! Buy 1 bottle get the other one free!"<br/>-Kathy</p><br/>
 
-      </div>
-    </div>
+        <p>"The Meeseeks Box works great! Way better than the one I bought off Rick's Place thank you!"<br/>-Kace</p>
 
-    </footer>
+        <p>"This will be the third planet I've purchased from the Blackhole Market. Each time the service has been Great!"<br/>-Cara</p><br/>
+
+        <p>"Not only do you have great prices, ask no questions, you shipped my star dust the next day."<br/>-Carlos</p><br/>
+
+        <p>"This will be the third planet I've purchased from the Blackhole Market. Each time the service has been Great!"<br/>-Rick Sanchez</p><br/>
+
+          </div>
+        </div>
+
+      </footer>
 
     <div class="footer" ng-if="ctrl.curUser">
       <h6>GA WDI - KEITH SWANSON - BRANTLEY BURTON - JON BONNET</h6>

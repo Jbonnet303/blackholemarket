@@ -5,7 +5,7 @@
       <dt><img ng-src="{{product.img}}"/></dt><br/>
       <dt>Quantity: &nbsp; {{ product.qty }}</dt><br/>
       <dt>Price: &nbsp; ${{ product.price }}</dt><br/>
-      <!-- <button href="#" ng-if="ctrl.curUser" ng-click="ctrl.getItem(product)">Buy</button><br/> -->
+      <button href="#" ng-if="ctrl.curUser" ng-click="ctrl.getItem(product)">Buy</button><br/>
       <button href="#" ng-if="ctrl.curUser" ng-click="ctrl.deleteItem(product)">Delete Item</button><br/>
 
       <div ng-if="$index != ctrl.indexOfEditFormToShow">
@@ -13,36 +13,18 @@
       ng-click="ctrl.indexOfEditFormToShow = $index"> Edit </button>
       </div>
 
-      <!-- <div ng-include="'partials/edititem.html'"></div> -->
-
-
-      <!-- <div class="edititem-container"> -->
-      <form ng-if="$index === ctrl.indexOfEditFormToShow" ng-submit="ctrl.editItem(product);">
-        <input type="text" ng-model="ctrl.updatedName" placeholder="{{product.name}}" />
-        <input type="text" ng-model="ctrl.updatedImg" placeholder="image" />
-        <input type="number" ng-model="ctrl.updatedQty" placeholder="{{product.qty}}" />
-        <input type="number" ng-model="ctrl.updatedPrice" placeholder="{{product.price}}" />
+      <div class="edititem-container">
+        <form ng-if="$index === ctrl.indexOfEditFormToShow" ng-submit="ctrl.editItem(product);"><br/>
+        <input type="text" ng-model="ctrl.updatedName" placeholder="{{product.name}}" /><br/>
+        <input type="text" ng-model="ctrl.updatedImg" placeholder="image" /><br/>
+        <input type="number" ng-model="ctrl.updatedQty" placeholder="{{product.qty}}" /><br/>
+        <input type="number" ng-model="ctrl.updatedPrice" placeholder="{{product.price}}" /><br/>
         <input type="submit" value="Update Item">
-      </form>
-    <!-- </div> -->
-
-
-
-
-      <!-- <form ng-submit="ctrl.editItem(product)" ng-if="ctrl.editItem==$item"><br/>
-          Name: <br/> <input type="text" ng-model="ctrl.itemCopy.name" placeholder="name"/><br/>
-          Image: <br/> <input type="text" ng-model="ctrl.itemCopy.image" name="img" placeholder="image"/><br/>
-          Quantity: <br/> <input type="number" ng-model="ctrl.itemCopy.qty" placeholder="quantity"/><br/>
-          Price: <br/> <input type="number" ng-model="ctrl.itemCopy.price" placeholder="price"/><br/>
-          <input type="submit" value="Save Edit" />
-      </form> -->
+        </form>
+      </div>
 
     </dl>
 
     <div class="members-only" ng-hide="ctrl.curUser" >
       <h3>Sign Up and Login In To Buy Items</h3>
     </div>
-
-  </div>
-  <div ng-if="ctrl.curUser" ng-include="'partials/additem.html'"></div>
-</div>

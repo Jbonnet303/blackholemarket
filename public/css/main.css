@@ -34,12 +34,13 @@ body {
 
 /* Button Style Added */
 button {
-  background-color: silver;
+  background-color: #005ff9;
+  color: black;
 }
 
 /* Button Hover Style Added */
 button:hover {
-  background-color: steelblue;
+  background-color: #0ef216;
 }
 
 /* Style Added To H1 Tag */
@@ -70,6 +71,7 @@ footer {
 /* Username Textarea Background Style */
 input[type="text"], textarea {
   background-color : #0ef216;
+  color: black;
 }
 
 /* Password Textarea Background Style */
@@ -84,12 +86,13 @@ input[type="number"], textarea {
 
 /* Password Submit Background Style */
 input[type="submit"], textarea {
-  background-color : silver;
+  background-color : #0ef216;
+  color: black;
 }
 
 /* Input Hover Background Style */
 input:hover[type="submit"], textarea {
-  background-color : steelblue;
+  background-color : #005ff9;
 }
 
 /* Style Added To Store Hours  */
@@ -109,7 +112,7 @@ input:hover[type="submit"], textarea {
   left: 0;
   padding: 1rem;
   color: #0ef216;
-  text-align: right;
+  text-align: center;
 }
 
 /* Message Telling Vistors To Login To Buy Items */
@@ -166,13 +169,22 @@ input:hover[type="submit"], textarea {
   justify-content: space-around;
   background-color: black;
   opacity: .9;
-  border: 5px solid silver;
+   border-radius: 5%;
+  border: 5px solid steelblue;
   color: steelblue;
   font-family: 'Quantico', sans-serif;
 }
 
 /* Style Added To Items In Show Container */
 .items-container {
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.edititem-container {
   margin: 20px;
   display: flex;
   flex-direction: row;
@@ -230,16 +242,16 @@ input:hover[type="submit"], textarea {
 /* Set the font, lean the board, position it */
 #review-board {
   font-family: 'Quantico', sans-serif;
-  transform: perspective(300px) rotateX(25deg);
+  transform: perspective(700px) rotateX(35deg);
   transform-origin: 50% 100%;
   text-align: justify;
   position: absolute;
   margin-left: -9em;
   overflow: hidden;
   font-size: 120%;
-  height: 5em;
+  height: 80%;
   width: 18em;
-  bottom: 0;
+  bottom: 80%;
   left: 50%;
 }
 
@@ -254,8 +266,8 @@ input:hover[type="submit"], textarea {
 
 /* Scrolling Animation and Position It */
 #reviews {
-  animation: scroll 30s linear 2s;
-  animation-duration: 30s;
+  animation: scroll 45s linear 1s;
+  animation-duration: 45s;
   animation-iteration-count: infinite;
   position: absolute;
   top: 100%;
