@@ -11,6 +11,11 @@ html {
   background-size: cover;
 }
 
+/* Style Added To Span Tag For Disclaimer */
+span {
+  color: red;
+}
+
 /* Style Added To Show Item Tags */
   dl, dd, dt {
   text-align: center;
@@ -184,6 +189,7 @@ input:hover[type="submit"], textarea {
   justify-content: space-around;
 }
 
+/* Style Added To Edit Item Container */
 .edititem-container {
   margin: 20px;
   display: flex;
