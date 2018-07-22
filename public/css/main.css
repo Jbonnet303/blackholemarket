@@ -139,7 +139,7 @@ input:hover[type="submit"], textarea {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  opacity: .5;
+  opacity: .8;
   text-align: center;
   padding: 30px;
 }
@@ -174,9 +174,9 @@ input:hover[type="submit"], textarea {
   justify-content: space-around;
   background-color: black;
   opacity: .9;
-   border-radius: 5%;
-  border: 5px solid steelblue;
-  color: steelblue;
+  border-radius: 5%;
+  border: 5px solid #1a6df2;
+  color: #1a6df2;
   font-family: 'Quantico', sans-serif;
 }
 
@@ -212,8 +212,8 @@ input:hover[type="submit"], textarea {
 		box-shadow: 0 0 50px rgba(0,255,0,.6), inset 0 0 50px rgba(0,255,0,.6), 0 5px 0 #24590d;
     }
     25% {
-    border-color: #1a4706;
-    box-shadow: 0 0 50px rgba(26,71,6,.6), inset 0 0 50px rgba(26,71,6,.6), 0 5px 0 #1a4706;
+    border-color: #1a6df2;
+    box-shadow: 0 0 50px rgba(26,109,242,.6), inset 0 0 50px rgba(26, 109, 242,.6), 0 5px 0 #1a6df2;
     }
     50% {
     border-color: #348e0b;
@@ -236,8 +236,8 @@ input:hover[type="submit"], textarea {
     box-shadow: 0 0 50px rgba(52,142,11,.6), inset 0 0 50px rgba(52,142,11,.6), 0 5px 0 #348e0b;
     }
     25% {
-    border-color: #1a4706;
-    box-shadow: 0 0 50px rgba(26,71,6,.6), inset 0 0 50px rgba(26,71,6,.6), 0 5px 0 #1a4706;
+    border-color: #1a6df2;
+    box-shadow: 0 0 50px rgba(26, 109, 242,.6), inset 0 0 50px rgba(26, 109, 242,.6), 0 5px 0 #1a6df2;
     }
     0% {
     border-color: #54e014;

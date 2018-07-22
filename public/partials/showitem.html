@@ -5,13 +5,23 @@
       <dt><img ng-src="{{product.img}}"/></dt><br/>
       <dt>Quantity: &nbsp; {{ product.qty }}</dt><br/>
       <dt>Price: &nbsp; ${{ product.price }}</dt><br/>
+
+      <!-- <% if (items.quantity <= 0) { %>
+      <h4 class="out-of-stock"> OUT OF STOCK </h4>
+      <% } else { %> -->
+
       <button href="#" ng-if="ctrl.curUser" ng-click="ctrl.getItem(product)">Buy</button><br/>
-      <button href="#" ng-if="ctrl.curUser" ng-click="ctrl.deleteItem(product)">Delete Item</button><br/>
+
+      <!-- <% } %> -->
 
       <div ng-if="$index != ctrl.indexOfEditFormToShow">
       <button ng-if="ctrl.curUser"
       ng-click="ctrl.indexOfEditFormToShow = $index"> Edit </button>
       </div>
+
+      <button href="#" ng-if="ctrl.curUser" ng-click="ctrl.deleteItem(product)">Delete Item</button><br/>
+
+
 
       <div class="edititem-container">
         <form ng-if="$index === ctrl.indexOfEditFormToShow" ng-submit="ctrl.editItem(product);"><br/>
