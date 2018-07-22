@@ -4,6 +4,21 @@ const app = angular.module("BHMApp", []);
 // Register the userInfo service
 app.service('$userInfo', UserInfo);
 
+// Register a directive for handling iframe loads
+// Code from: https://stackoverflow.com/questions/15882326/angular-onload-function-on-an-iframe
+app.directive('iframeOnload', [function() {
+  return {
+    scope: {
+      callBack: '&iframeOnload'
+    },
+    link: function(scope, element, attrs){
+      element.on('load', function(){
+        return scope.callBack();
+      })
+    }
+  };
+}]);
+
 // The main controller
 app.controller("MainController", ['$scope', '$http', '$userInfo', function($scope, $http, $userInfo) {
   // A trick to make referencing controller variables the same
@@ -199,15 +214,21 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
 }])
 
 // A controller for the chat functionality
-app.controller("ChatController", ['$scope', '$userInfo', function($scope, $userInfo) {
+app.controller("ChatController", ['$scope', '$sce', '$userInfo', function($scope, $sce, $userInfo) {
   // A trick to make referencing controller variables the same
   // from the index.html and inside the controller
   const chat = this;
   // A reference to the chat window DOM object
   const chatWindow = document.getElementById('chat-messages');
   // All references from now on will use chat.<ref> instead of this.<ref>
+  chat.iframeClass = 'hidden';
+  chat.preloaderClass = 'preloader';
+  chat.iframeDest = '_blank';
   chat.message = '';
-  chat.receivedMessages = [];
+  chat.receivedMessages = [{user:'system',message:'Welcome to the Blackhole Market user chat!'}];
+  chat.chatVisible = false;
+  chat.showModal = false;
+  chat.tabText = 'Show Chat';
 
   // A special variable for the socket.io interaction
   chat.socket = io();
@@ -223,6 +244,52 @@ app.controller("ChatController", ['$scope', '$userInfo', function($scope, $userI
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
+  // A function to switch from the preloader to the iframe content
+  // This needs to use $scope rather than chat to be able to use the custom directive
+  $scope.switchIFrameContent = () => {
+    // Update the classes to swap visibility
+    chat.preloaderClass = 'hidden';
+    chat.iframeClass = 'ftw';
+    // Make sure the page refelcts the model changes
+    $scope.$apply();
+  }
+
+  // A function to open the modal
+  const openModal = () => {
+    // Show the modal on the page
+    chat.showModal = true;
+    // Update the iframe content destination
+    chat.iframeDest = $sce.trustAsResourceUrl('https://psycoder42.github.io/fight-to-win/game/index.html');
+  }
+
+  // The close button was pressed on the modal
+  chat.closeModal = () => {
+    // Update the classes to reset default visibility
+    chat.iframeClass = 'hidden';
+    chat.preloaderClass = 'provider';
+    // Hide the modal
+    chat.showModal = false;
+  }
+
+  // Toggle the chat dialog
+  chat.toggleDialog = () => {
+    // Show or hide as appropriate
+    if (chat.chatVisible) {
+      // Hide the chat
+      chat.tabText = 'Show Chat';
+    } else {
+      // Show
+      chat.tabText = 'Hide Chat';
+    }
+    // Record the new state
+    chat.chatVisible = !chat.chatVisible;
+  }
+
+  // Figure out what class should be assigned to the chat dialog
+  chat.getDialogClass = () => {
+    return (chat.chatVisible ? 'chat-container show' : 'chat-container');
+  }
+
   // Figure out what class should be assigned to the username span
   chat.getUserClass = (username) => {
     return (getUsername()==username ? 'self' : 'stranger');
@@ -230,6 +297,13 @@ app.controller("ChatController", ['$scope', '$userInfo', function($scope, $userI
 
   // Send a chat message to whomever is connected
   chat.sendMessage = () => {
+    // An easter egg
+    if (chat.message == 'Fight to Win!') {
+      // Show the easter egg and don't send the message
+      chat.message = '';
+      openModal();
+      return;
+    }
     let userMessage = cleanString(chat.message);
     // Don't send a message that is only whitespace
     if (userMessage.length > 0) {

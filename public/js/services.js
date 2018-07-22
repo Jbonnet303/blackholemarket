@@ -24,7 +24,14 @@ UserInfo.prototype.get = function() {
 UserInfo.prototype.refresh = async function() {
   try {
     let response = await this.$http({ method: 'GET', url: '/sessions' });
-    this.currentInfo = response.data;
+    // The responce might be empty so make sure to confirm it is a valid object
+    if (response.data._id) {
+      // It is an actual user object
+      this.currentInfo = response.data;
+    } else {
+      // Not a user object (it's most likely an empty object)
+      this.currentInfo = null;
+    }
   } catch (err) {
     if (err.status != 401) {
       // Log for debugging purposes

@@ -1,7 +1,7 @@
 /* Main Background Image Set */
 html {
   position: absolute;
-  background: url(https://www.nasa.gov/sites/default/files/cygx1_ill.jpg) center center;
+  background: url('../images/background.jpg') center center;
   width: 100%;
   height: auto;
   background-repeat: no-repeat;
@@ -156,48 +156,6 @@ input:hover[type="submit"], textarea {
   align-items: stretch;
 }
 
-/* The message area of the chat dialog */
-#chat-messages {
-  height: 7em;
-  margin: 0;
-  flex-grow: 1;
-  text-align: left;
-  border: 1px inset silver;
-  background-color: black;
-  overflow-y: auto;
-  color: #0ef216;
-}
-
-/* Individual displayed messages */
-.message {
-  margin: 3px 5px;
-}
-
-/* The input area of the chat dialog */
-.chat-input {
-  opacity: .5;
-  display: flex;
-}
-
-/* The chat input box */
-.chat-input > input[type="text"] {
-  flex-grow: 1;
-}
-
-/* The chat send button */
-.chat-input > input[type="submit"] {
-  color: black;
-  background-color: #0ef216;
-}
-
-/* Message user name styles */
-.self {
-  color: yellow;
-  font-style: italic;
-}
-.stranger {
-  color: orange;
-}
 
 /* Style Added To Show Container */
 .showitem-container {

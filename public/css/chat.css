@@ -1,0 +1,145 @@
+.chat-container {
+  position: fixed;
+  bottom: -200px;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transition-duration: 1s;
+  z-index: 5;
+}
+
+.chat-container.show {
+  transform: translateY(-200px);
+}
+
+.chat-tab {
+  position: absolute;
+  text-align: justify;
+  height: 30px;
+  width: 120px;
+  padding: 4px;
+  right: 100px;
+  top: -29px;
+  color: #0ef216;
+  background: black;
+  border: 1px inset silver;
+  border-bottom: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.chat-tab-icon {
+  height: 1em;
+  padding-left: 10px;
+  padding-right: 5px;
+  vertical-align: text-top;
+}
+
+.chat-tab-icon g {
+  stroke: #0ef216;
+}
+
+#chat-messages {
+  margin: 0;
+  height: 180px;
+  text-align: left;
+  border: 1px inset silver;
+  background-color: black;
+  overflow-y: auto;
+  color: #0ef216;
+}
+
+.message {
+  margin: 3px 5px;
+}
+
+.chat-input {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+/* The chat input box */
+.chat-input > input[type="text"] {
+  margin: 0;
+  flex-grow: 1;
+}
+
+/* The chat send button */
+.chat-input > input[type="submit"] {
+  margin: 0;
+  color: black;
+  background-color: #0ef216;
+}
+
+/* Message user name styles */
+.self {
+  color: yellow;
+  font-style: italic;
+}
+.stranger {
+  color: orange;
+}
+.system {
+  color: white;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.popup {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  height: 700px;
+  width: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-popup {
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  margin: 25px;
+  font-weight: bolder;
+  cursor: pointer;
+  padding: 2px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.preloader {
+  text-align: center;
+}
+
+.ftw {
+  overflow: hidden;
+  position: relative;
+  top: -10px;
+  border: 0;
+}
+
+.hidden {
+  display: none;
+}
