@@ -24,12 +24,20 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   // A trick to make referencing controller variables the same
   // from the index.html and inside the controller
   const ctrl = this;
-
-  //Hide edit form after done
-  ctrl.indexOfEditFormToShow = null;
   // All references from now on will use ctrl.<ref> instead of this.<ref>
   ctrl.title = "Blackhole Market";
+  ctrl.items = [];
   ctrl.curUser = null;
+  ctrl.otherForm = 'Sign Up';
+  ctrl.selectedNavPartial = 'partials/main.html'
+
+  //Hide edit form after done
+  ctrl.indexOfEditFormToShow = -1;
+
+  // Helper method to find an item's index in the item array
+  const getIdx = (item) => {
+    return ctrl.items.findIndex((x)=>{ return x.name == item.name; });
+  }
 
   // Simple helper function to set the user info (shares it with the chat controller)
   ctrl.setCurUser = (info) => {
@@ -37,12 +45,24 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
     $userInfo.set(info);
   }
 
+  // Checkes whether a user is logged in and an admin
+  ctrl.canEdit = () => {
+    return (ctrl.curUser && ctrl.curUser.isAdmin);
+  }
+
+  // Change the main content based on the user selection in the nav bar
+  ctrl.setMainContent = (page) => {
+    ctrl.selectedNavPartial = `partials/${page}.html`
+  }
+
   // Changes the functionality of the cred form
   ctrl.toggleCredFormType = (makeLogIn) => {
     ctrl.isLogIn = !ctrl.isLogIn;
     if (ctrl.isLogIn) {
+      ctrl.otherForm = 'Sign Up';
       ctrl.credBtnText = 'log in';
     } else {
+      ctrl.otherForm = 'Log In';
       ctrl.credBtnText = 'sign up';
     }
     ctrl.credErrorMessage = '';
@@ -53,6 +73,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   ctrl.resetCredForm = () => {
     ctrl.isLogIn = true;
     ctrl.credErrorMessage = '';
+    ctrl.otherForm = 'Sign Up';
     ctrl.credBtnText = 'log in';
     ctrl.creds = {username:'', password:''};
   }
@@ -116,7 +137,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
         ctrl.credErrorMessage = userError;
         return false;
       }
-      let passError = validateUsername(ctrl.creds.password);
+      let passError = validatePassword(ctrl.creds.password);
       if (passError) {
         // The username wasn't valid
         ctrl.credErrorMessage = passError;
@@ -142,64 +163,109 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       $scope.$apply();
     }
   }
+
+  // Set up the edit box for an item
+  ctrl.editClicked = (item, index) => {
+    // Pre-populate the editing values
+    ctrl.updatedName = item.name;
+    ctrl.updatedImg = item.img;
+    ctrl.updatedQty = item.qty;
+    ctrl.updatedPrice = item.price;
+    // Update indexOfEditFormToShow to show the edit form
+    ctrl.indexOfEditFormToShow = index;
+  }
+
   //Call to backend to create a new item
-  ctrl.createItem = function(){
-    console.log("create item push");
-          $http({
-              method:'POST',
-              url: '/items/new',
-              data: {
-                name: ctrl.name,
-                img: ctrl.img,
-                qty: ctrl.qty,
-                price: ctrl.price
-              }
-          }).then(function(response){
-              ctrl.getItems();
-          }, function(){
-              console.log('error');
-          });
+  ctrl.createItem = function() {
+    $http({
+      method: 'POST',
+      url: '/items/new',
+      data: {
+        name: ctrl.name,
+        img: ctrl.img,
+        qty: ctrl.qty,
+        price: ctrl.price
       }
+    }).then(function(response) {
+      // Add the new item to the array of items
+      ctrl.items.push(response.data);
+    }, function() {
+      console.log('error');
+    });
+  }
+
   //Call to backend to list all items
-  ctrl.getItems = function(){
-      $http({
-          method:'GET',
-          url: '/items',
-      }).then(function(response){
-          ctrl.items = response.data;
-      }, function(){
-          console.log('error');
-      });
+  ctrl.getItems = function() {
+    $http({
+      method: 'GET',
+      url: '/items',
+    }).then(function(response) {
+      // Overwrite the existing array of items with the result of the HTTP call
+      ctrl.items = response.data;
+    }, function() {
+      console.log('error');
+    });
   };
+
   //Call to backend to delete the item
-  ctrl.deleteItem = function(item){
+  ctrl.deleteItem = function(item) {
+    // immediately remove the item from the array of items
+    ctrl.items.splice(getIdx(item), 1);
+    // Remove it from the DB
     $http({
-        method:'DELETE',
-        url: '/items/' + item._id
-    }).then(function(response){
-          ctrl.getItems();
-        }, function(error){
-          console.log('error');
-        });
-      };
+      method: 'DELETE',
+      url: '/items/' + item._id
+    }).then(function(response) {
+      // Nothing to do here
+    }, function(error) {
+      console.log('error');
+    });
+  };
+
+  //Call to backend to update the quantity
+  ctrl.buyItem = function(item) {
+    // Update the item's quantity
+    item.qty--;
+    // Store the change in the DB
+    $http({
+      method: 'POST',
+      url: '/items/buy',
+      data: {
+        id: item._id,
+        qty: item.qty
+      }
+    }).then(function(response) {
+      // Nothing to do here
+    }, function() {
+      console.log('error');
+    });
+  }
+
   //Call to backend to edit the item
-  ctrl.editItem = function(item){
+  ctrl.editItem = function(item) {
+    // Update the local item and close the form before sending the http request
+    item.name = ctrl.updatedName;
+    item.img = ctrl.updatedImg;
+    item.qty = ctrl.updatedQty;
+    item.price = ctrl.updatedPrice;
+    ctrl.indexOfEditFormToShow = -1;
+    // Send the reqeust to the backend
     $http({
-        method:'PUT',
-        url: '/items/' + item._id,
-        data: {
-          name: ctrl.updatedName,
-          img: ctrl.updatedImg,
-          qty: ctrl.updatedQty,
-          price: ctrl.updatedPrice
-        }
-    }).then(function(response){
-        ctrl.getItems();
-        ctrl.indexOfEditFormToShow = null;
-        }, function(error){
-          console.log('error');
-        });
-      };
+      method: 'PUT',
+      url: '/items/' + item._id,
+      data: {
+        name: ctrl.updatedName,
+        img: ctrl.updatedImg,
+        qty: ctrl.updatedQty,
+        price: ctrl.updatedPrice
+      }
+    }).then(function(response) {
+      // Nothing to do here
+    }, function(error) {
+      console.log('error');
+    });
+  };
+
   // Initialize the login form variables
   ctrl.resetCredForm();
   //Calls all the items to show on the page

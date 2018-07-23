@@ -1,48 +1,46 @@
 <div class="showitem-container">
+
+  <div class="members-only" ng-hide="ctrl.curUser" >
+    <h3>Sign Up and Login In For Access</h3>
+    <h6><span>Disclaimer:</span> We shall not be liable for any<br/>
+      loss or damage of whatever nature (direct, indirect<br/>
+      consequential, or other) which may arise as a result of your<br/>
+      inability to use this website.
+  </div>
+
   <div class="items-container">
-    <dl ng-repeat="product in ctrl.items"><br/>
-      <dt>{{ product.name }}</dt><br/>
-      <dt><img ng-src="{{product.img}}"/></dt><br/>
-      <dt>Quantity: &nbsp; {{ product.qty }}</dt><br/>
-      <dt>Price: &nbsp; ${{ product.price }}</dt><br/>
-      <!-- <button href="#" ng-if="ctrl.curUser" ng-click="ctrl.getItem(product)">Buy</button><br/> -->
-      <button href="#" ng-if="ctrl.curUser" ng-click="ctrl.deleteItem(product)">Delete Item</button><br/>
+    <dl ng-repeat="product in ctrl.items | orderBy: 'name'"><br/>
+      <!-- Hide the display content when the edit dialog is open -->
+      <div ng-hide="$index === ctrl.indexOfEditFormToShow">
+        <dt>{{ product.name }}</dt><br/>
+        <dt><img ng-src="{{product.img}}"/></dt><br/>
+        <dt>Quantity: &nbsp; {{ product.qty }}</dt><br/>
+        <dt>Price: &nbsp; ${{ product.price }}</dt><br/>
 
-      <div ng-if="$index != ctrl.indexOfEditFormToShow">
-      <button ng-if="ctrl.curUser"
-      ng-click="ctrl.indexOfEditFormToShow = $index"> Edit </button>
+        <dt ng-if="ctrl.curUser && product.qty <= 0">SOLD OUT</dt>
+        <button ng-if="ctrl.curUser && product.qty > 0"
+          ng-click="ctrl.buyItem(product)">Buy</button><br/>
+
+        <button class="admin-btn" ng-if="ctrl.canEdit()"
+          ng-click="ctrl.editClicked(product, $index)">Edit</button>
+
+        <button class="admin-btn" ng-if="ctrl.canEdit()"
+          ng-click="ctrl.deleteItem(product)">Delete</button>
       </div>
-
-      <!-- <div ng-include="'partials/edititem.html'"></div> -->
-
-
-      <!-- <div class="edititem-container"> -->
-      <form ng-if="$index === ctrl.indexOfEditFormToShow" ng-submit="ctrl.editItem(product);">
-        <input type="text" ng-model="ctrl.updatedName" placeholder="{{product.name}}" />
-        <input type="text" ng-model="ctrl.updatedImg" placeholder="image" />
-        <input type="number" ng-model="ctrl.updatedQty" placeholder="{{product.qty}}" />
-        <input type="number" ng-model="ctrl.updatedPrice" placeholder="{{product.price}}" />
-        <input type="submit" value="Update Item">
-      </form>
-    <!-- </div> -->
-
-
-
-
-      <!-- <form ng-submit="ctrl.editItem(product)" ng-if="ctrl.editItem==$item"><br/>
-          Name: <br/> <input type="text" ng-model="ctrl.itemCopy.name" placeholder="name"/><br/>
-          Image: <br/> <input type="text" ng-model="ctrl.itemCopy.image" name="img" placeholder="image"/><br/>
-          Quantity: <br/> <input type="number" ng-model="ctrl.itemCopy.qty" placeholder="quantity"/><br/>
-          Price: <br/> <input type="number" ng-model="ctrl.itemCopy.price" placeholder="price"/><br/>
-          <input type="submit" value="Save Edit" />
-      </form> -->
+      <!-- Only show the edit form when the admin presses the edit button -->
+      <div class="edititem-container" ng-if="$index === ctrl.indexOfEditFormToShow">
+        <form ng-submit="ctrl.editItem(product);"><br/>
+          <input type="text" ng-model="ctrl.updatedName" placeholder="name"/><br/>
+          <input type="text" ng-model="ctrl.updatedImg" placeholder="image"/><br/>
+          <input type="number" ng-model="ctrl.updatedQty" placeholder="quantity"/><br/>
+          <input type="number" ng-model="ctrl.updatedPrice" placeholder="price"/><br/>
+          <button type="button" class="cancel-edit" ng-click="ctrl.indexOfEditFormToShow = -1">Cancel</button>
+          <input type="submit" value="Update">
+        </form>
+      </div>
 
     </dl>
 
-    <div class="members-only" ng-hide="ctrl.curUser" >
-      <h3>Sign Up and Login In To Buy Items</h3>
-    </div>
-
   </div>
-  <div ng-if="ctrl.curUser" ng-include="'partials/additem.html'"></div>
+
 </div>

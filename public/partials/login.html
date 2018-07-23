@@ -1,30 +1,17 @@
+<!-- Log in form -->
 <form ng-hide="ctrl.curUser" class="cred-form" ng-submit="ctrl.submitCredForm()">
+  <!-- Field to display errors -->
+  <div class="cred-error">{{ ctrl.credErrorMessage }}</div>
   <input type="text" placeholder="Username" ng-model="ctrl.creds.username" required>
   <input type="password" placeholder="Password" ng-model="ctrl.creds.password" required>
   <input id="login-button" type="submit" value="{{ ctrl.credBtnText }}">
-
-<!-- Makes Sign Up Button Thats Not Connected To User And Pass -->
-<!-- <input id="signup-button" type="submit" value="Sign Up"> -->
-
-<!-- Field Between Login Button And Laser Toggles Login Button To Sign Up Button -->
-  <div class="cred-error" ng-click="ctrl.toggleCredFormType()">{{ ctrl.credErrorMessage }}</div>
-
 </form>
-
-
+<!-- Log out form -->
 <form ng-show="ctrl.curUser" class="cred-form" ng-submit="ctrl.doLogOut()">
-
-  <div class="store-hours" ng-show="ctrl.curUser">
-    <h5>Store Hours</h5>
-    <h6>Monday-Friday: &nbsp; 5 &nbsp; a.m. &nbsp; - &nbsp; 5 &nbsp; p.m.</h6>
-    <h6>Saturday: &nbsp; 5 &nbsp; a.m. &nbsp; - &nbsp; 8 &nbsp; p.m.</h6>
-    <h6>Sunday: &nbsp; Blackhole Market Closed</h6>
-  </div>
-
+  <div class="cred-error">{{ ctrl.credErrorMessage }}</div>
   <input id="logout-button" type="submit" value="log out">
 </form>
-
-
-<!-- <div class="store-hours" ng-show="ctrl.curUser">
-  <h5>Store Hours 24/7</h5>
-</div> -->
+<!-- Button to switch between log in and sign up -->
+<div class="switch-login" ng-hide="ctrl.curUser" ng-click="ctrl.toggleCredFormType()">
+  {{ ctrl.otherForm }}
+</div>
