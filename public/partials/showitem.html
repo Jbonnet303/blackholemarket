@@ -9,36 +9,32 @@
   </div>
 
   <div class="items-container">
-    <dl ng-repeat="product in ctrl.items"><br/>
-      <dt>{{ product.name }}</dt><br/>
-      <dt><img ng-src="{{product.img}}"/></dt><br/>
-      <dt>Quantity: &nbsp; {{ product.qty }}</dt><br/>
-      <dt>Price: &nbsp; ${{ product.price }}</dt><br/>
+    <dl ng-repeat="product in ctrl.items | orderBy: 'name'"><br/>
+      <!-- Hide the display content when the edit dialog is open -->
+      <div ng-hide="$index === ctrl.indexOfEditFormToShow">
+        <dt>{{ product.name }}</dt><br/>
+        <dt><img ng-src="{{product.img}}"/></dt><br/>
+        <dt>Quantity: &nbsp; {{ product.qty }}</dt><br/>
+        <dt>Price: &nbsp; ${{ product.price }}</dt><br/>
 
-      <!-- <% if (items.quantity <= 0) { %>
-      <h4 class="out-of-stock"> OUT OF STOCK </h4>
-      <% } else { %> -->
+        <dt ng-if="ctrl.curUser && product.qty <= 0">SOLD OUT</dt>
+        <button ng-if="ctrl.curUser && product.qty > 0">Buy</button><br/>
 
-      <button ng-if="ctrl.curUser">Buy</button><br/>
+        <button class="admin-btn" ng-if="ctrl.canEdit()"
+          ng-click="ctrl.editClicked(product, $index)">Edit</button>
 
-      <!-- <% } %> -->
-
-      <div ng-if="$index != ctrl.indexOfEditFormToShow">
-        <button ng-if="ctrl.canEdit()"
-        ng-click="ctrl.indexOfEditFormToShow = $index"> Edit </button>
+        <button class="admin-btn" ng-if="ctrl.canEdit()"
+          ng-click="ctrl.deleteItem(product)">Delete</button>
       </div>
-
-      <button href="#" ng-if="ctrl.canEdit()" ng-click="ctrl.deleteItem(product)">Delete Item</button><br/>
-
-
-
-      <div class="edititem-container">
-        <form ng-if="$index === ctrl.indexOfEditFormToShow" ng-submit="ctrl.editItem(product);"><br/>
-        <input type="text" ng-model="ctrl.updatedName" placeholder="{{product.name}}" /><br/>
-        <input type="text" ng-model="ctrl.updatedImg" placeholder="image" /><br/>
-        <input type="number" ng-model="ctrl.updatedQty" placeholder="{{product.qty}}" /><br/>
-        <input type="number" ng-model="ctrl.updatedPrice" placeholder="{{product.price}}" /><br/>
-        <input type="submit" value="Update Item">
+      <!-- Only show the edit form when the admin presses the edit button -->
+      <div class="edititem-container" ng-if="$index === ctrl.indexOfEditFormToShow">
+        <form ng-submit="ctrl.editItem(product);"><br/>
+          <input type="text" ng-model="ctrl.updatedName" placeholder="name"/><br/>
+          <input type="text" ng-model="ctrl.updatedImg" placeholder="image"/><br/>
+          <input type="number" ng-model="ctrl.updatedQty" placeholder="quantity"/><br/>
+          <input type="number" ng-model="ctrl.updatedPrice" placeholder="price"/><br/>
+          <button type="button" class="cancel-edit" ng-click="ctrl.indexOfEditFormToShow = -1">Cancel</button>
+          <input type="submit" value="Update">
         </form>
       </div>
 

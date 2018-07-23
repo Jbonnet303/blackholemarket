@@ -88,29 +88,29 @@ h3 {
 }
 
 /* Username Textarea Background Style */
-input[type="text"], textarea {
+input[type="text"] {
   background-color : #0ef216;
   color: black;
 }
 
 /* Password Textarea Background Style */
-input[type="password"], textarea {
+input[type="password"] {
   background-color : #0ef216;
 }
 
 /* Number Textarea Background Style */
-input[type="number"], textarea {
+input[type="number"] {
   background-color : #0ef216;
 }
 
 /* Password Submit Background Style */
-input[type="submit"], textarea {
+input[type="submit"], .cancel-edit, .admin-btn {
   background-color : #0ef216;
   color: black;
 }
 
 /* Input Hover Background Style */
-input:hover[type="submit"], textarea {
+input:hover[type="submit"], .cancel-edit:hover, .admin-btn:hover {
   background-color : #005ff9;
 }
 

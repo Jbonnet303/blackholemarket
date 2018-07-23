@@ -31,7 +31,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   ctrl.selectedNavPartial = 'partials/main.html'
 
   //Hide edit form after done
-  ctrl.indexOfEditFormToShow = null;
+  ctrl.indexOfEditFormToShow = -1;
 
   // Simple helper function to set the user info (shares it with the chat controller)
   ctrl.setCurUser = (info) => {
@@ -67,6 +67,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   ctrl.resetCredForm = () => {
     ctrl.isLogIn = true;
     ctrl.credErrorMessage = '';
+    ctrl.otherForm = 'Sign Up';
     ctrl.credBtnText = 'log in';
     ctrl.creds = {username:'', password:''};
   }
@@ -157,6 +158,17 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
     }
   }
 
+  // Set up the edit box for an item
+  ctrl.editClicked = (item, index) => {
+    // Pre-populate the editing values
+    ctrl.updatedName = item.name;
+    ctrl.updatedImg = item.img;
+    ctrl.updatedQty = item.qty;
+    ctrl.updatedPrice = item.price;
+    // Update indexOfEditFormToShow to show the edit form
+    ctrl.indexOfEditFormToShow = index;
+  }
+
   //Call to backend to create a new item
   ctrl.createItem = function() {
     $http({
@@ -201,6 +213,13 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
 
   //Call to backend to edit the item
   ctrl.editItem = function(item) {
+    // Update the local item and close the form before sending the http request
+    item.name = ctrl.updatedName;
+    item.img = ctrl.updatedImg;
+    item.qty = ctrl.updatedQty;
+    item.price = ctrl.updatedPrice;
+    ctrl.indexOfEditFormToShow = -1;
+    // Send the reqeust to the backend
     $http({
       method: 'PUT',
       url: '/items/' + item._id,
@@ -212,7 +231,6 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       }
     }).then(function(response) {
       ctrl.getItems();
-      ctrl.indexOfEditFormToShow = null;
     }, function(error) {
       console.log('error');
     });
