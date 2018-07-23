@@ -2,8 +2,10 @@
 <form ng-hide="ctrl.curUser" class="cred-form" ng-submit="ctrl.submitCredForm()">
   <!-- Field to display errors -->
   <div class="cred-error">{{ ctrl.credErrorMessage }}</div>
-  <input type="text" placeholder="Username" ng-model="ctrl.creds.username" required>
-  <input type="password" placeholder="Password" ng-model="ctrl.creds.password" required>
+  <input type="text" placeholder="Username" ng-model="ctrl.creds.username" required
+    title="Usernames are between 3 and 32 characters long and can contain letters, numbers, periods, dashes, and underscores.">
+  <input type="password" placeholder="Password" ng-model="ctrl.creds.password" required
+    title="Passwords are at least 6 characters long and are case sensative.">
   <input id="login-button" type="submit" value="{{ ctrl.credBtnText }}">
 </form>
 <!-- Log out form -->
