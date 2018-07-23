@@ -18,7 +18,8 @@
         <dt>Price: &nbsp; ${{ product.price }}</dt><br/>
 
         <dt ng-if="ctrl.curUser && product.qty <= 0">SOLD OUT</dt>
-        <button ng-if="ctrl.curUser && product.qty > 0">Buy</button><br/>
+        <button ng-if="ctrl.curUser && product.qty > 0"
+          ng-click="ctrl.buyItem(product)">Buy</button><br/>
 
         <button class="admin-btn" ng-if="ctrl.canEdit()"
           ng-click="ctrl.editClicked(product, $index)">Edit</button>

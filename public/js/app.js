@@ -26,12 +26,18 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   const ctrl = this;
   // All references from now on will use ctrl.<ref> instead of this.<ref>
   ctrl.title = "Blackhole Market";
+  ctrl.items = [];
   ctrl.curUser = null;
   ctrl.otherForm = 'Sign Up';
   ctrl.selectedNavPartial = 'partials/main.html'
 
   //Hide edit form after done
   ctrl.indexOfEditFormToShow = -1;
+
+  // Helper method to find an item's index in the item array
+  const getIdx = (item) => {
+    return ctrl.items.findIndex((x)=>{ return x.name == item.name; });
+  }
 
   // Simple helper function to set the user info (shares it with the chat controller)
   ctrl.setCurUser = (info) => {
@@ -181,7 +187,8 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
         price: ctrl.price
       }
     }).then(function(response) {
-      ctrl.getItems();
+      // Add the new item to the array of items
+      ctrl.items.push(response.data);
     }, function() {
       console.log('error');
     });
@@ -193,6 +200,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
       method: 'GET',
       url: '/items',
     }).then(function(response) {
+      // Overwrite the existing array of items with the result of the HTTP call
       ctrl.items = response.data;
     }, function() {
       console.log('error');
@@ -201,15 +209,37 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
 
   //Call to backend to delete the item
   ctrl.deleteItem = function(item) {
+    // immediately remove the item from the array of items
+    ctrl.items.splice(getIdx(item), 1);
+    // Remove it from the DB
     $http({
       method: 'DELETE',
       url: '/items/' + item._id
     }).then(function(response) {
-      ctrl.getItems();
+      // Nothing to do here
     }, function(error) {
       console.log('error');
     });
   };
+
+  //Call to backend to update the quantity
+  ctrl.buyItem = function(item) {
+    // Update the item's quantity
+    item.qty--;
+    // Store the change in the DB
+    $http({
+      method: 'POST',
+      url: '/items/buy',
+      data: {
+        id: item._id,
+        qty: item.qty
+      }
+    }).then(function(response) {
+      // Nothing to do here
+    }, function() {
+      console.log('error');
+    });
+  }
 
   //Call to backend to edit the item
   ctrl.editItem = function(item) {
@@ -230,7 +260,7 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
         price: ctrl.updatedPrice
       }
     }).then(function(response) {
-      ctrl.getItems();
+      // Nothing to do here
     }, function(error) {
       console.log('error');
     });
