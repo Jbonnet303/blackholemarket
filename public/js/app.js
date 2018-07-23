@@ -27,6 +27,8 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
   // All references from now on will use ctrl.<ref> instead of this.<ref>
   ctrl.title = "Blackhole Market";
   ctrl.curUser = null;
+  ctrl.otherForm = 'Sign Up';
+  ctrl.selectedNavPartial = 'partials/main.html'
 
   //Hide edit form after done
   ctrl.indexOfEditFormToShow = null;
@@ -42,12 +44,19 @@ app.controller("MainController", ['$scope', '$http', '$userInfo', function($scop
     return (ctrl.curUser && ctrl.curUser.isAdmin);
   }
 
+  // Change the main content based on the user selection in the nav bar
+  ctrl.setMainContent = (page) => {
+    ctrl.selectedNavPartial = `partials/${page}.html`
+  }
+
   // Changes the functionality of the cred form
   ctrl.toggleCredFormType = (makeLogIn) => {
     ctrl.isLogIn = !ctrl.isLogIn;
     if (ctrl.isLogIn) {
+      ctrl.otherForm = 'Sign Up';
       ctrl.credBtnText = 'log in';
     } else {
+      ctrl.otherForm = 'Log In';
       ctrl.credBtnText = 'sign up';
     }
     ctrl.credErrorMessage = '';

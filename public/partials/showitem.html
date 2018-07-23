@@ -1,4 +1,13 @@
 <div class="showitem-container">
+
+  <div class="members-only" ng-hide="ctrl.curUser" >
+    <h3>Sign Up and Login In For Access</h3>
+    <h6><span>Disclaimer:</span> We shall not be liable for any<br/>
+      loss or damage of whatever nature (direct, indirect<br/>
+      consequential, or other) which may arise as a result of your<br/>
+      inability to use this website.
+  </div>
+
   <div class="items-container">
     <dl ng-repeat="product in ctrl.items"><br/>
       <dt>{{ product.name }}</dt><br/>
@@ -10,13 +19,13 @@
       <h4 class="out-of-stock"> OUT OF STOCK </h4>
       <% } else { %> -->
 
-      <button href="#" ng-if="ctrl.curUser" ng-click="ctrl.getItem(product)">Buy</button><br/>
+      <button ng-if="ctrl.curUser">Buy</button><br/>
 
       <!-- <% } %> -->
 
       <div ng-if="$index != ctrl.indexOfEditFormToShow">
-      <button ng-if="ctrl.canEdit()"
-      ng-click="ctrl.indexOfEditFormToShow = $index"> Edit </button>
+        <button ng-if="ctrl.canEdit()"
+        ng-click="ctrl.indexOfEditFormToShow = $index"> Edit </button>
       </div>
 
       <button href="#" ng-if="ctrl.canEdit()" ng-click="ctrl.deleteItem(product)">Delete Item</button><br/>
@@ -35,10 +44,6 @@
 
     </dl>
 
-    <div class="members-only" ng-hide="ctrl.curUser" >
-      <h3>Sign Up and Login In For Access</h3>
-      <h6><span>Disclaimer:</span> We shall not be liable for any<br/>
-        loss or damage of whatever nature (direct, indirect<br/>
-        consequential, or other) which may arise as a result of your<br/>
-        inability to use this website.
-    </div>
+  </div>
+
+</div>

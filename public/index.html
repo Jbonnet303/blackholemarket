@@ -15,62 +15,32 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/chat.css">
   </head>
-
   <body ng-controller="MainController as ctrl">
 
     <div class="text glow">
       <header>
         <div ng-include="'partials/login.html'"></div>
       </header>
+      <nav ng-include="'partials/navbar.html'"></nav>
     </div>
 
-      <h1>{{ ctrl.title }}</h1>
+    <h1>{{ ctrl.title }}</h1>
 
-      <div ng-if="ctrl.canEdit()" ng-include="'partials/additem.html'"></div>
+    <div class="main-content">
 
-      <div ng-include="'partials/showitem.html'"></div>
+      <!-- Show whichever parital the user selected (defaulted to main) -->
+      <div ng-include="ctrl.selectedNavPartial"></div>
 
-      <footer>
-        <div id="review-board" ng-if="ctrl.curUser">
-          <div id="reviews" ng-if="ctrl.curUser">
+    </div>
 
-        <p>"Great sale on dark matter! Buy 1 bottle get the other one free!"<br/>-Karolin</p><br/>
-
-        <p>"The Meeseeks Box works great! Way better than the one I bought off Rick's Place thank you!"<br/>-Matt</p>
-
-        <p>"Not only do you have great prices, ask no questions, you shipped my star dust the next day."<br/>-Jerrica</p><br/>
-
-        <p>"Thank you very much for your great service."<br/>-Phoebe Buffay</p><br/>
-
-        <p>"Keith, Brantley, & Jon, I just received my moon rocks. I love them!"<br/>-Joey Tribbiani</p><br/>
-
-        <p>"The best supercooled combat impulse engine I have ever bought."<br/>-Rachel Green</p><br/>
-
-        <p>"Finally a website with a consistent suppy of cryoplasma infused singularity cores!"<br/>-Monica Bing</p><br/>
-
-        <p>"My quantum phase deflector arrived in perfect condition and a day earlier! Thank you!"<br/>-Chandler Bing</p><br/>
-
-        <p>"Best neutrino bomb I've ever used... ever!"<br/>-Ross Geller</p><br/>
-
-        <p>"Great sale on dark matter! Buy 1 bottle get the other one free!"<br/>-Kathy</p><br/>
-
-        <p>"The Meeseeks Box works great! Way better than the one I bought off Rick's Place thank you!"<br/>-Kace</p>
-
-        <p>"This will be the third planet I've purchased from the Blackhole Market. Each time the service has been Great!"<br/>-Cara</p><br/>
-
-        <p>"Not only do you have great prices, ask no questions, you shipped my star dust the next day."<br/>-Carlos</p><br/>
-
-        <p>"This will be the third planet I've purchased from the Blackhole Market. Each time the service has been Great!"<br/>-Rick Sanchez</p><br/>
-
-          </div>
-        </div>
-
+    <!-- Footer information -->
+    <div class="text glow">
+      <footer class="footer">
+        <h6>GA WDI - KEITH SWANSON - BRANTLEY BURTON - JON BONNET</h6>
       </footer>
-
-    <div class="footer" ng-if="ctrl.curUser">
-      <h6>GA WDI - KEITH SWANSON - BRANTLEY BURTON - JON BONNET</h6>
     </div>
 
+    <!-- Include the chat box -->
     <div ng-include="'partials/chat.html'"></div>
 
   </body>

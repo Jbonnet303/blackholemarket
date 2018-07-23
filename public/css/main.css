@@ -1,23 +1,36 @@
 /* Main Background Image Set */
 html {
   position: absolute;
-  background: url('../images/background.jpg') center center;
+  background: url('../images/background.jpg');
   width: 100%;
-  height: auto;
+  height: 100%;
   background-repeat: no-repeat;
+  background-position: center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 
-/* Style Added To Span Tag For Disclaimer */
-span {
-  color: red;
+* {
+  box-sizing: border-box;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+nav > h5 {
+  font-family: 'Quantico', sans-serif;
+  text-align: center;
+  color: #0ef216;
+  text-shadow: 2px 2px 4px #000, -2px 2px 4px #000, 2px -2px 4px #000, -2px -2px 4px #000;
+  cursor: pointer;
 }
 
 /* Style Added To Show Item Tags */
-  dl, dd, dt {
+dl, dd, dt {
   text-align: center;
 }
 
@@ -34,7 +47,15 @@ p {
 
 /* Default to things being centered */
 body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
 }
 
 /* Button Style Added */
@@ -53,7 +74,7 @@ h1 {
   font-family: 'Quantico', sans-serif;
   text-align: center;
   font-size: 60px;
-  padding-top: 60px;
+  padding-top: 20px;
   color: #0ef216;
   text-shadow: 35px 35px 20px #000000;
 }
@@ -65,12 +86,6 @@ h3 {
   font-size: 40px;
   color: #0ef216;
   text-shadow: 35px 35px 20px #000000;
-}
-
-/* Style Added To Scrolling Comments footer */
-/* Creates Space At Bottom Of Page For Review Comments */
-footer {
-  padding-top: 50px;
 }
 
 /* Username Textarea Background Style */
@@ -100,9 +115,18 @@ input:hover[type="submit"], textarea {
   background-color : #005ff9;
 }
 
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
 /* Style Added To Store Hours  */
 .store-hours {
-  padding-right: 600px;
+  display: inline-block;
+  margin: 30px auto;
   color: #0ef216;
   font-family: 'Quantico', sans-serif;
   text-align: left;
@@ -111,19 +135,26 @@ input:hover[type="submit"], textarea {
 /* Style Added To Footer Tag */
 .footer {
   font-size: 5px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   padding: 1rem;
   color: #0ef216;
   text-align: center;
 }
 
+.footer h6 {
+  margin: 0;
+  padding: 5px;
+}
+
 /* Message Telling Vistors To Login To Buy Items */
 .members-only {
+  display: block;
   text-align: center;
   color: #0ef216;
+}
+
+/* Style Added To Span Tag For Disclaimer */
+.members-only span {
+  color: red;
 }
 
 /* Style Added To Login/logout Buttons */
@@ -131,6 +162,15 @@ input:hover[type="submit"], textarea {
   height: 39px;
   background-color: #0ef216;
   color: black;
+}
+
+.switch-login {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  color: #0ef216;
+  cursor: pointer;
+  text-shadow: 2px 2px 4px #000, -2px 2px 4px #000, 2px -2px 4px #000, -2px -2px 4px #000;
 }
 
 /* Style Added To login form */
@@ -142,6 +182,7 @@ input:hover[type="submit"], textarea {
   opacity: .8;
   text-align: center;
   padding: 30px;
+  padding-bottom: 0;
 }
 
 /* Style for the login error messages */
@@ -155,23 +196,12 @@ input:hover[type="submit"], textarea {
   font-weight: bold;
 }
 
-/* The user chat dialog */
-.chat-dialog {
-  width: 70%;
-  min-width: 300px;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-
-
 /* Style Added To Show Container */
 .showitem-container {
-  margin: 30px;
+  margin: 0 30px;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
   background-color: black;
   opacity: .9;
   border-radius: 5%;
@@ -180,9 +210,14 @@ input:hover[type="submit"], textarea {
   font-family: 'Quantico', sans-serif;
 }
 
+.showitem-container.narrow {
+  display: inline-flex;
+  padding: 0 60px;
+}
+
 /* Style Added To Items In Show Container */
 .items-container {
-  margin: 20px;
+  /* margin: 20px; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -257,8 +292,9 @@ input:hover[type="submit"], textarea {
   font-size: 120%;
   height: 80%;
   width: 18em;
-  bottom: 80%;
+  bottom: 120px;
   left: 50%;
+  text-shadow: 2px 2px 4px #000, -2px 2px 4px #000, 2px -2px 4px #000, -2px -2px 4px #000;
 }
 
 #review-board:after {
