@@ -114,6 +114,15 @@ input:hover[type="submit"], .cancel-edit:hover, .admin-btn:hover {
   background-color : #005ff9;
 }
 
+/* Style Added To Login-Logout Button Hover Color */
+#login-button:hover {
+background-color: #005ff9;
+}
+
+ /* Style Added To Login-Logout Button Hover Color  */
+#logout-button:hover {background-color: #005ff9;
+}
+
 .main-content {
   flex-grow: 1;
   display: flex;
